@@ -1,4 +1,4 @@
-# Character Replacer
+# Satisfactory: Character Replacer
 
 ## Install
 
