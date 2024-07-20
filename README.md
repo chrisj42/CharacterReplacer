@@ -2,7 +2,9 @@
 
 ## Install
 
-View on the modding site: (link)
+Once this is uploaded, users of the mod can install it from the modding website / SML registry.
+
+However, if you want to make an avatar mod of your own, you're going to want to download / clone this repo to your local dev mods folder.
 
 ## Overview
 
