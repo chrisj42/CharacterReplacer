@@ -34,6 +34,8 @@ So, to get a rig (and create your test avatar) you will need:
 
 I'm not saying it's impossible to get your assets from other sources, but this (should) work. The modding community has an asset dumper, but I found that the models I got from that were missing a lot of bones, and it caused me many problems.
 
+**Update Note:** As of FModel 4.4.3.6, they seem to have fixed gltf/glb exports, which blender natively supports importing. So, you might not need the version restrictions or the plugin this way. It also doesn't seem to import at 100x scale. However, when I tested it, it rendered really glitchy, so there's probably a setting somewhere that needs to be set; but I can't be bothered to debug it. Let me know if you choose to go this route and successfully get a model to behave correctly, I'd be happy to add that here.
+
 ### FModel
 We will start with the FModel process. (skipping over a bit for now, other modding communities like palworld can teach you how to set up fmodel)
 - Ensure fmodel's browse folder is set to the `FactoryGame/Content/Paks` folder inside your Satisfactory install folder.
