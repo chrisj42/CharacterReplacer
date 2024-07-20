@@ -14,24 +14,25 @@ No custom avatars are included when you install this mod alone. It is designed t
 
 I've created the mod as a beginner to both unreal and satisfactory modding, but I've tried to have it take care of as much of the process as possible, which still encompassed a good few weeks of debugging and programming... but if you want to add your own models, you _will_ have to nonetheless get your hands a little dirty setting up the all the raw assets in unreal, and then doing a quick attachment to my mod, before packaging yours.
 
-The API to register your own avatar(s) is fairly simple, consisting of four main steps, only two of which I'll cover here:
-1. **Prereq:** You have your avatar re-rigged (as with player mesh replacement in most games)
-1. **Prereq:** You've gone through the modding env set up as described on the satisfactory modding wiki/docs
+The API to register your own avatar(s) is fairly simple, consisting of a couple main steps, only some of which I'll cover here:
+1. You obtain the game rig that you'll need to conform your model to
+1. **Not Covered** (mostly): You have your avatar re-rigged (as with player mesh replacement in most games)
+1. **Not Covered**: You've gone through the modding env set up as described on the satisfactory modding wiki/docs
 1. You import your model(s) into unreal
 1. You set up a quick interface with CharacterReplacer to register your avatar(s).
 
-Re-rigging a model can be complex, and obtaining the armature to rig to can also take time; but it shouldn't be anything unusual to someone who has replaced rigged models in other games before. There are many guides out there and many communities which will help. **However**, it is worth note that you will need to make **two separate models: for first and third person**, and in a couple places their bone structure *does vary slightly*, so make sure you pay attention and get both versions of the rig for reference.
+## Obtaining The Player Rig and a Test Avatar
 
-Throughout this doc I'll be short-handing "first person" to "1p" and "third person" to "3p". Just for reference.
+Re-rigging a model can be complex, and obtaining the armature to rig to can also take time; but it shouldn't be anything unusual to someone who has replaced rigged models in other games before. There are many guides out there and many communities which will help. **However**, it is worth note that you will need to make **two separate models: for first and third person**, as their bone structure *does vary a bit*, so make sure you pay attention and get both versions of the rig for reference.
 
-The Satisfactory modding community will also gladly help with any problems you may have setting up the modding environment. It is a somewhat long process, but it is unfortunately required, as there is no way to add an fbx or other model file to the game without running it through the full unreal packing process in the specific custom engine version used by the satisfactory devs and modified further by the modding team. The modding team are working on tools to automate the process for you as much as possible, though. So that's very nice of them. :)
+Just a note before we start, throughout this doc, I'll be short-handing "first person" to "1p" and "third person" to "3p". Just for reference.
 
-## Tips On the Re-Rig process
-
-You will need:
+So, to get a rig (and create your test avatar) you will need:
 - FModel
 - Blender 4.0
 - The psk importer plugin for blender found here: https://github.com/DarklightGames/io_scene_psk_psa
+
+I'm not saying it's impossible to get your assets from other sources, but this (should) work. The modding community has an asset dumper, but I found that the models I got from that were missing a lot of bones, and it caused me many problems.
 
 ### FModel
 We will start with the FModel process. (skipping over a bit for now, other modding communities like palworld can teach you how to set up fmodel)
@@ -60,7 +61,9 @@ A quick note about the model armatures, that you'll have to modify before export
 You should then be good to export it as an fbx. Disable "Add leaf bones" and set the scale to 0.01.
 I'd recommend exporting the basic model as is, as a test, and make sure you can get this new "custom" avatar to show up and animate in game, before working on re-rigging your custom model to this rig.
 
-Some final tips when you're doing your re-rigging:
+## Tips on Re-Rigging
+
+For those who are ready to make their own avatar (and who ideally already have experience in this area), here are some tips mostly specific to satisfactory:
 - Keep the head on the 3p model, and remove it on the 1p model. Unless you want to try and use the base-game helmet. Then remove it on both.
 - The 1p model is structured a fair bit different, as the arms are severed from the body bone-wise. For, you know, first-person reasons.
 - For the 3p model, the head *must* be all weighted to a single head bone. Like, you *can* keep other bones on it, but... don't expect the physics engine to like you. It might be possible to find a way to make said bones work well, but I haven't figured it out. Let me know on the discord if you figure something out!
@@ -68,24 +71,30 @@ Some final tips when you're doing your re-rigging:
 
 Note: Getting the model configured at this stage (basically getting a correctly-configured fbx file) is by far the most touchy, annoying, buggy step. If something doesn't work, it was probably because of this. Even if you follow everything, it might need some blood sacrifices. And tinkering. And comparing against the main model and skeleton. Good luck!
 
-## After Completing the PreReqs
+## Getting Ready for Unreal
 
-With all the above said and done, once you have your FBXs, and your environment is set up, you can make a new, simple blueprint mod, and get started on the couple steps you need. Everything below will be done inside the `Content` folder of a new blueprint mod you've made via the Alpakit wizard. Remember, refer to the Modding docs or discord for how all that stuff works.
+With all the above said and done, and you have your FBX files in hand, it'll be time to start putting things into the Unreal Engine. This is where I will direct you to the modding docs for setting up a starter project, so come back when you've got that all sorted. https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/index.html
+
+The Satisfactory modding community will gladly help with any problems you may have setting up the modding environment. It is a somewhat long process, but it is unfortunately required, as there is no way to add an fbx or other model file to the game without running it through the full unreal packing process in the specific custom engine version used by the satisfactory devs, and modified further by the modding team. But modding team are working on tools to automate as much as possible the process of setting up this env for you. So that's very nice of them. :)
+
+## Creating your Avatar Mod
+
+Once your environment is set up, you can make a new, simple blueprint mod, and get started on the couple steps you need. Everything below will be done inside the `Content` folder of a new blueprint mod you've made via the Alpakit wizard. Remember, refer to the Modding docs or discord for how all that stuff works.
 
 Note: **Always remember to save your assets!!!** Unreal does not automatically save changes to assets like imported models, textures, materials, or blueprints or anything else.
 You *must* do this yourself, and if you forget, and then pack your mod, it *will* behave strangely and you *will* be confused. And I _will_ be sad. Go to `File -> Save All` for easy saving.
 
 ### Importing your Model into Unreal
 
-You're going to want to do the following for both your first person and third person models (although ideally they can share the same textures).
+You're going to want to do the following for both your first person and third person models.
 Side note, as you create your assets, if you are adding more than one avatar, I'd recommend using subfolders for each one as you drag stuff in; it will get messy otherwise. :)
 
 1. Drag your fbx into the editor, and you'll be greeted with the import dialog. Ensure the following non-default options are changed:
    1. Set "Use T0 As Ref Pose"
-   2. Look under the "Material" Section lower down; assuming your 1p model materials are a subset of the 3p model materials, you'll want to import the 3p model with the "Material Import Method" as "Create New Materials" and then for the 1p, select "Do not create materials" and don't import the textures. Then you can edit the 1p mesh and drag the materials in. Or you can just... Import it for both, and then delete one... or do whatever... I won't stop you.
+   2. Look under the "Material" Section lower down; typically, you can probably just leave these alone, allowing it to create new materials for you based on the model. But if they're the same materials for both the 1p and 3p models, you probably don't need to import the same materials for both. Just reuse one of them for the other.
    3. Hit "Import All".
-1. Unreal will create a Skeletal Mesh, a Skeleton, a PhysicsAsset, and material slots according to your avatar, if you opted to create them. The skeleton and physics asset won't be used, but having them generated is important.
-   - If your model didn't come with the materials attached, you'll have to recreate them and import the textures. You can configure the materials as you wish in a fairly intuitive manner (it's a shader graph like blender, but different). I won't be covering how to do that here.
+1. Unreal will create a Skeletal Mesh, a Skeleton, a PhysicsAsset, and material slots according to your avatar, if you opted to create them.
+   - If your model didn't come with the materials attached, you'll have to recreate them and import the textures. You can configure the materials as you wish (it's a shader graph like blender, but different). I won't be covering how to do that here, it's basic shader stuff, you can look at unreal docs or most node based material editors.
 1. Right Click the skeletal mesh (NOT the skeleton), and click "Assign Skeleton"
 1. For the 1p model, look for `1PCharacter_Skeleton`; for the 3p model, look for `Character_Skeleton`. Assign this to your skeletal mesh.
    - You may want to watch out for any errors in this step; it may lead you to realize if any of your bones are missing. It won't show _every_ possible bone problem though.
