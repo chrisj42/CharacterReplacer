@@ -101,6 +101,8 @@ Side note, as you create your assets, if you are adding more than one avatar, I'
 1. For the 1p model, look for `1PCharacter_Skeleton`; for the 3p model, look for `Character_Skeleton`. Assign this to your skeletal mesh.
    - You may want to watch out for any errors in this step; it may lead you to realize if any of your bones are missing. It won't show _every_ possible bone problem though.
 
+Note: There may be other, more complex ways to handle skeletons; unreal has a ton of fancy rigging stuff. You're free to give it a go. But this assumes little unreal knowledge (and comes from someone with little unreal knowledge), so we're going for the simplest solution where all the rigging work is in blender.
+
 ### Registering your Model as an in-game Avatar
 
 Once you've imported your model, assigned the skeleton, and recreated the textures, we can get on to the CharacterReplacer-specific stuff that does the magic.
