@@ -2,9 +2,9 @@
 
 ## Install
 
-Once this is uploaded, users of the mod can install it from the modding website / SML registry.
+This mod will usually be installed as a dependency of actual model mods; installing it alone serves little purpose. Still, it is available on the SML registry as "CharacterReplacer".
 
-However, if you want to make an avatar mod of your own, you're going to want to download / clone this repo to your local dev mods folder.
+If you want to make an avatar mod of your own however, you're going to want to download / clone this repo to your local dev mods folder.
 
 ## Overview
 
@@ -57,10 +57,10 @@ From there, you should be able to open blender, and install the plugin. If it do
 A quick note about the model armatures, that you'll have to modify before export:
 - The models will import at 100x scale. Just a funny unreal thing. You can leave it as is, but when you export to fbx, export at 0.01 scale, _or_, in unreal, import at 0.01 scale. Otherwise you'll find, like I did, that when you try to drop items in game, they drop 200 feet in the air, and when you die (or get hit), your ragdoll spazzes into the next dimension.
 
-3. When you assign the skeleton later in unreal, the bones **won't match unless you do a few things first.** For **both the 1p and 3p models:**
-   1. Go into armature edit mode, and delete the root bone.
-   2. Rename the armature object (the green object under "Pose") to `Root` (capital R).
-   3. Rename the parent armature object (the top orange one) to `Root` as well.
+When you assign the skeleton later in unreal, the bones **won't match unless you do a few things first.** For **both the 1p and 3p models:**
+   - Go into armature edit mode, and delete the root bone.
+   - Rename the armature object (the green object under "Pose") to `Root` (capital R).
+   - Rename the parent armature object (the top orange one) to `Root` as well.
 
 You should then be good to export it as an fbx. Disable "Add leaf bones" and set the scale to 0.01.
 I'd recommend exporting the basic model as is, as a test, and make sure you can get this new "custom" avatar to show up and animate in game, before working on re-rigging your custom model to this rig.
@@ -120,7 +120,9 @@ Once you've imported your model, assigned the skeleton, and recreated the textur
 1. Go to Class Settings and implement the `AvatarProvider` interface.
 1. In the `Get Avatars to Register` function implementation for `AvatarProvider`, drag your AvatarDescriptors map variable out and connect it to the output.
 
-And... you should be more or less done! If you compile/install your mod along with CharacterReplacer, it should automatically detect and load your registered avatars from your new mod and any others you have, and from there, it will take care of letting you select one from the mod config page and play with others with their own selected avatars! Just make sure everyone has the same set of avatar mods.
+As a last step... I'd suggest listing CharacterReplacer as a dependency of your mod. After all, it won't work without it! If you aren't planning on publishing the mod to the SML registry though, then it probably isn't necessary. You can find instructions here: https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/ReleaseMod.html#_special_fields
+
+And with that, you should be good to go! If you compile/install your mod along with CharacterReplacer, it should automatically detect and load your registered avatars from your new mod and any others you have, and from there, it will take care of letting you select one from the mod config page and play with others with their own selected avatars! Just make sure everyone has the same set of avatar mods.
 
 (show image of the Root GameInstance settings, and an image of the AvatarDefinition class)
 
