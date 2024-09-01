@@ -1,3 +1,7 @@
+### 1.0.2
+
+- removed unused C++ filler
+
 ### 1.0.1
 
 - added template Materials for easy instancing
