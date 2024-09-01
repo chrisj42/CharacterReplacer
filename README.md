@@ -55,7 +55,7 @@ If you want to have the game textures as well, for reference, you can find them 
 From there, you should be able to open blender, and install the plugin. If it doesn't install correctly, use a legacy steam branch or other means to get specifically blender 4.0, which should work. Then you can just import the PSK(s).
 
 A quick note about the model armatures, that you'll have to modify before export:
-- The models will import at 100x scale. Just a funny unreal thing. You can leave it as is, but when you export to fbx, export at 0.01 scale, _or_, in unreal, import at 0.01 scale. Otherwise you'll find, like I did, that when you try to drop items in game, they drop 200 feet in the air, and when you die (or get hit), your ragdoll spazzes into the next dimension.
+- The models will import at 100x scale. Just a funny unreal thing. I'd recommend scaling it back down with the scale tool; but if you don't really know what you're doing, you can just scale it down to 0.01 when you export to fbx, _or_, in unreal, import at 0.01 scale. Otherwise you'll find, like I did, that when you try to drop items in game, they drop 200 feet in the air, and when you die (or get hit), your ragdoll spazzes into the next dimension.
 
 When you assign the skeleton later in unreal, the bones **won't match unless you do a few things first.** For **both the 1p and 3p models:**
    - Go into armature edit mode, and delete the root bone.
@@ -138,7 +138,7 @@ If the model shows up in game, but it looks weird, behaves weird, etc, then you 
 - during the re-rigging process in blender / your modelling software of choice, or
 - while importing the model into unreal.
 
-If interaction is behaving weirdly, and items are not dropping on the ground, and the model is scaled way up in the editor... make sure it isn't scaled way up. Sometimes while getting the model, it ends up at 100x scale, so you'll need to scale it back down either while exporting the fbx or importing it to unreal.
+If interaction is behaving weirdly, and items are not dropping on the ground, and the model is scaled way up in the editor... make sure it isn't scaled way up. Sometimes while getting the model, it ends up at 100x scale, so you'll need to scale it back down either just in blender, while exporting the fbx from blender, or while importing it to unreal.
 
 If the model is broken, or doesn't show up, or doesn't move or animate, try making sure all the bones match exactly as expected, and that your model *does have* all the bones of the actual pioneer model. Certain methods of obtaining the base model from the game may end up with some socket bones or other bones missing, so double check against the actual skeleton in unreal if possible.
 
