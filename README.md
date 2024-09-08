@@ -99,6 +99,7 @@ Side note, as you create your assets, if you are adding more than one avatar, I'
    3. Hit "Import All".
 1. Unreal will create a Skeletal Mesh, a Skeleton, a PhysicsAsset, and material slots according to your avatar, if you opted to create them.
    - If your model didn't come with the materials attached, you'll have to recreate them and import the textures. You can configure the materials as you wish (it's a shader graph like blender, but different). I won't be covering how to do that here, it's basic shader stuff, you can look at unreal docs or most node based material editors.
+   - Note: I *did* create some materials that you can create "Material Instances" from, which may simplify setup depending on how your textures are laid out. I was having issues getting the materials to actually set properly in game with somebody's avatar, but instances of those seem to work... for some reason.
 1. Right Click the skeletal mesh (NOT the skeleton), and click "Assign Skeleton"
 1. For the 1p model, look for `1PCharacter_Skeleton`; for the 3p model, look for `Character_Skeleton`. Assign this to your skeletal mesh.
    - You may want to watch out for any errors in this step; it may lead you to realize if any of your bones are missing. It won't show _every_ possible bone problem though.
@@ -131,6 +132,10 @@ And with that, you should be good to go! If you compile/install your mod along w
 ## Troubleshooting
 
 **Did you remember to save your unreal assets before packaging?** If not, go to File -> Save All. And try again. Trust me, I've forgotten *so many times.* It causes the *dumbest* bugs.
+
+### Problems with the Textures not showing up
+
+I don't have a whole lot to say about this, however I did find that when I later tried to make an avatar for somebody, for SOME REASON The new materials I created for them in unreal just didn't work in game. It would show us untextured. However using a texture from one of my initial models when I first made the mod worked, when I copied it and changed out all of the textures. So... I haven't figured that one out. But if you do also run into issues of the textures not showing, try creating a material instance, And select one of the materials in the character replacer mod files as the parent, or alternatively, just copy the material and then insert your textures. Hopefully that works!
 
 ### Problems with the Model behaving in game
 
