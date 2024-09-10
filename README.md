@@ -23,9 +23,12 @@ The API to register your own avatar(s) is fairly simple, consisting of a couple 
 1. You import your model(s) into unreal
 1. You set up a quick interface with CharacterReplacer to register your avatar(s).
 
-## Obtaining The Player Rig and a Test Avatar
+## Obtaining The Player Rigs and a Test Avatar
 
-Re-rigging a model can be complex, and obtaining the armature to rig to can also take time; but it shouldn't be anything unusual to someone who has replaced rigged models in other games before. There are many guides out there and many communities which will help. **However**, it is worth note that you will need to make **two separate models: for first and third person**, as their bone structure *does vary a bit*, so make sure you pay attention and get both versions of the rig for reference.
+Re-rigging a model can be complex, and obtaining the armature to rig to can also take time; but it shouldn't be anything unusual to someone who has replaced rigged models in other games before. There are many guides out there and many communities which will help.
+
+> [!IMPORTANT]
+> **You will need to make *two separate models: for first and third person***. Their bone structure *does vary a bit*, and you won't want head stuff on your first-person model. So make sure you pay attention and get both versions of the rig for reference.
 
 Just a note before we start, throughout this doc, I'll be short-handing "first person" to "1p" and "third person" to "3p". Just for reference.
 
