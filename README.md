@@ -23,7 +23,9 @@ The API to register your own avatar(s) is fairly simple, consisting of a couple 
 1. You import your model(s) into unreal
 1. You set up a quick interface with CharacterReplacer to register your avatar(s).
 
-## Obtaining The Player Rigs and a Test Avatar
+---
+
+## 1. Obtaining The Player Rigs
 
 Re-rigging a model can be complex, and obtaining the armature to rig to can also take time; but it shouldn't be anything unusual to someone who has replaced rigged models in other games before. There are many guides out there and many communities which will help.
 
@@ -54,31 +56,47 @@ The Character Meshes can be found in `FactoryGame/Content/FactoryGame/Character/
 
 If you want to have the game textures as well, for reference, you can find them in the `Textures` folder next to the `Mesh` folder. Be sure to select "Save Textures" instead.
 
-### Blender
-From there, you should be able to open blender, and install the plugin. If it doesn't install correctly, use a legacy steam branch or other means to get specifically blender 4.0, which should work. Then you can just import the PSK(s).
+At this point, you should have 2 PSK files, called `Character.psk` and `1PCharacter.psk`.
 
-A quick note about the model armatures, that you'll have to modify before export:
-- The models will import at 100x scale. Just a funny unreal thing. I'd recommend scaling it back down with the scale tool; but if you don't really know what you're doing, you can just scale it down to 0.01 when you export to fbx, _or_, in unreal, import at 0.01 scale. Otherwise you'll find, like I did, that when you try to drop items in game, they drop 200 feet in the air, and when you die (or get hit), your ragdoll spazzes into the next dimension.
+Then, open blender, and install the `io_scene_psk_psa` plugin. If it doesn't install correctly, use a legacy steam branch or other means to get specifically blender 4.0, which should work. Then you can just import each psk to a separate blend file, and you should have the rigs available for your use.
 
-When you assign the skeleton later in unreal, the bones **won't match unless you do a few things first.** For **both the 1p and 3p models:**
-   - Go into armature edit mode, and delete the root bone.
-   - Rename the armature object (the green object under "Pose") to `Root` (capital R).
-   - Rename the parent armature object (the top orange one) to `Root` as well.
+> [!NOTE]
+> The models will likely import at 100x scale. Just an artifact of the whole fmodel/psk thing it seems. Select all and **S**cale down to 0.01, then you should be good to go. 
 
-You should then be good to export it as an fbx. Disable "Add leaf bones" and set the scale to 0.01.
-I'd recommend exporting the basic model as is, as a test, and make sure you can get this new "custom" avatar to show up and animate in game, before working on re-rigging your custom model to this rig.
+---
 
-## Tips on Re-Rigging
+## 2. Rigging Requirements in Blender
 
-For those who are ready to make their own avatar (and who ideally already have experience in this area), here are some tips mostly specific to satisfactory:
+Here is where I'll talk about what modelers need to know to make a compatible FBX in the game. This has nothing to do with my mod, it's just how satisfactory's player meshes work.
+
+If you want to test the rest of the process out before getting into the nitty-gritty of re-rigging (an idea which I highly recommend), skip the tips below, and continue with the [Final Edits](#final-edits-and-export), using the pioneer meshes you just imported.
+
+### Tips on Re-Rigging
+
+> [!IMPORTANT]
+> To re-iterate, **you need to ensure you have both player models.** 1p and 3p *have important distinctions.* You can probably copy a lot of your work from one to the other, but **you will be exporting two distinct FBX files.**
+
+Now then, for those who are ready to make their own avatar (and who ideally already have experience in this area), here are some tips mostly specific to satisfactory:
 - Keep the head on the 3p model, and remove it on the 1p model. Unless you want to try and use the base-game helmet. Then remove it on both.
 - The 1p model is structured a fair bit different, as the arms are severed from the body bone-wise. For, you know, first-person reasons.
 - For the 3p model, the head *must* be all weighted to a single head bone. Like, you *can* keep other bones on it, but... don't expect the physics engine to like you. It might be possible to find a way to make said bones work well, but I haven't figured it out. Let me know on the discord if you figure something out!
 - If you can export it with materials, feel free; it will save time on set up in unreal, allowing you to just import the materials instead of recreating them.
 
-Note: Getting the model configured at this stage (basically getting a correctly-configured fbx file) is by far the most touchy, annoying, buggy step. If something doesn't work, it was probably because of this. Even if you follow everything, it might need some blood sacrifices. And tinkering. And comparing against the main model and skeleton. Good luck!
+### Final Edits and Export
 
-## Getting Ready for Unreal
+The armatures exported from FModel aren't actually *exactly* what the game expects, so you need to make a couple edits first. For **both the 1p and 3p models:**
+   - Go into armature edit mode, and delete the root bone.
+   - Rename the armature object (the green object under "Pose") to `Root` (capital R).
+   - Rename the parent armature object (the top orange one) to `Root` as well.
+
+You should then be good to export it as an fbx. Open the export to FBX dialog and disable "Add leaf bones", then click "Export FBX".
+
+> [!NOTE]
+> Getting the model configured at this stage (basically getting a correctly-configured fbx file) is by far the most touchy, annoying, buggy step. If something doesn't work, it was probably because of this. Even if you follow everything, it might need some blood sacrifices. And tinkering. And comparing against the main model and skeleton. Good luck!
+
+---
+
+## 3. Getting Ready for Unreal
 
 With all the above said and done, and you have your FBX files in hand, it'll be time to start putting things into the Unreal Engine. This is where I will direct you to the modding docs for setting up a starter project, so come back when you've got that all sorted. https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/index.html
 
@@ -146,7 +164,7 @@ If the model shows up in game, but it looks weird, behaves weird, etc, then you 
 - during the re-rigging process in blender / your modelling software of choice, or
 - while importing the model into unreal.
 
-If interaction is behaving weirdly, and items are not dropping on the ground, and the model is scaled way up in the editor... make sure it isn't scaled way up. Sometimes while getting the model, it ends up at 100x scale, so you'll need to scale it back down either just in blender, while exporting the fbx from blender, or while importing it to unreal.
+_Items not dropping, or dropping high in the sky? Ragdoll spazzing into the next dimension on death?_ Your model is probably scaled x100 in the editor. Delete the skeletal mesh and re-import the FBX, but set `Transform -> Import Uniform Scale` to 0.01.
 
 If the model is broken, or doesn't show up, or doesn't move or animate, try making sure all the bones match exactly as expected, and that your model *does have* all the bones of the actual pioneer model. Certain methods of obtaining the base model from the game may end up with some socket bones or other bones missing, so double check against the actual skeleton in unreal if possible.
 
