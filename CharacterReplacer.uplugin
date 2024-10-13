@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0.1",
+	"VersionName": "2.0.0",
 	"FriendlyName": "Character Replacer",
 	"Description": "Modify the Character mesh of you and your friends and handle live config updates to who wears what mesh. This mod by itself does not include any custom models.",
 	"Category": "Modding",
@@ -14,19 +14,13 @@
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
-	"Modules": [
-		{
-			"Name": "CharacterReplacer",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		}
-	],
 	"Plugins": [
 		{
 			"Name": "SML",
 			"Enabled": true,
-			"SemVersion": "^3.7.0"
+			"SemVersion": "^3.8.0"
 		}
 	],
-	"SemVersion": "1.0.1"
+	"SemVersion": "2.0.0",
+	"GameVersion": ">=365306"
 }

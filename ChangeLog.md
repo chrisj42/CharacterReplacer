@@ -1,3 +1,11 @@
+# 2.0.0
+
+- Initial Re-Release for Satisfactory 1.0
+- No new features from last version
+
+Note: Process for obtaining modding / mesh / armature etc. resources from the game may have changed slightly.
+Existing models continue to work, however, textures or materials taken from base will will need to be updated.
+
 ### 1.0.2
 
 - removed unused C++ filler
