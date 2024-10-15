@@ -1,13 +1,15 @@
-# 2.0.0
+# 1.1.0
 
 - Initial Re-Release for Satisfactory 1.0
-- No new features from last version
 
+- Existing model mods should work with a simple re-compile
 Note: Process for obtaining modding / mesh / armature etc. resources from the game may have changed slightly.
 Existing models continue to work, however, textures or materials taken from base will will need to be updated.
 
 - added debug command to set offline player avatars
 	- may or may not work as a non-server client, but it's just for debugging anyways
+
+- custom models should show up in hub locker customizer
 
 ### 1.0.2
 
