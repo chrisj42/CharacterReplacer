@@ -13,6 +13,8 @@ Existing models continue to work, however, textures or materials taken from base
 
 - added more material templates, modified sampler type of some existing ones to fit the data type
 
+- renamed /model/m command to /avatar or /avi (/model still works)
+
 ### 1.0.2
 
 - removed unused C++ filler
