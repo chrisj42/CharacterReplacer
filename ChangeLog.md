@@ -4,12 +4,14 @@
 
 - Existing model mods should work with a simple re-compile
 Note: Process for obtaining modding / mesh / armature etc. resources from the game may have changed slightly.
-Existing models continue to work, however, textures or materials taken from base will will need to be updated.
+Existing models continue to work, however, textures or materials taken from base game will will need to be updated.
 
 - added debug command to set offline player avatars
-	- may or may not work as a non-server client, but it's just for debugging anyways
+	- may or may not work as a non-server client, but it's just for debugging
 
 - custom models should show up in hub locker customizer
+
+- added more material templates, modified sampler type of some existing ones to fit the data type
 
 ### 1.0.2
 
