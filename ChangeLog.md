@@ -15,6 +15,8 @@ Existing models continue to work, however, textures or materials taken from base
 
 - renamed /model/m command to /avatar or /avi (/model still works)
 
+- Implemented custom avatars on the title screen because it's funny and cool (main pioneer is your selected mesh, others are random others you have)
+
 ### 1.0.2
 
 - removed unused C++ filler
