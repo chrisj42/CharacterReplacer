@@ -17,6 +17,12 @@ Existing models continue to work, however, textures or materials taken from base
 
 - Implemented custom avatars on the title screen because it's funny and cool (main pioneer is your selected mesh, others are random others you have)
 
+- Added config option to set an avatar to render when the desired avatar cannot be found for whatever reason (usually a mistyped or outdated id, or an uninstalled mod)
+
+- changed ID format to be `:ModRef:avatarname` (IDs starting with : will always be matched against a full ID)
+	- any full-format avatar names will need to be set again in the config
+
+
 ### 1.0.2
 
 - removed unused C++ filler
