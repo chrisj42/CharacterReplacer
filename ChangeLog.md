@@ -22,10 +22,9 @@ Existing models continue to work, however, textures or materials taken from base
 - changed ID format to be `:ModRef:avatarname` (IDs starting with : will always be matched against a full ID)
 	- any full-format avatar names will need to be set again in the config
 
+- removed unused C++ module
 
-### 1.0.2
-
-- removed unused C++ filler
+- updated README guide with 1.0 process
 
 ### 1.0.1
 
