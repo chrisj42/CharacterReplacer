@@ -44,7 +44,7 @@ Once you've decided on a model, here's a rough outline of what needs to happen i
 [Step 5.](#5-registering-your-model-as-an-in-game-avatar) (Unreal):  Register your avatars with Character Replacer
 
 > [!IMPORTANT]
-> **[You will need to obtain *two separate rigs*](#)** to make an avatar: one for first person, one for third person. They're not *that* different, but both are required.
+> **<ins>You will need to obtain *two separate rigs*</ins>** to make an avatar: one for first person, one for third person. They're not *that* different, but both are required.
 
 Thus, ***a note on terminology:*** I'll be short-handing in this doc "first person" to "1p" and "third person" to "3p".
 
@@ -87,7 +87,7 @@ At this point, you should have 2 PSK files, called `SK_Pioneer_01.psk` and `SK_P
 Then, open blender, and install the `io_scene_psk_psa` plugin. If it doesn't install correctly, use a legacy steam branch or other means to get specifically blender 4.0, which should work. Then you can just import each psk *(I recommend doing so in separate blend files)*, and you should have the rigs available for your use.
 
 > [!WARNING]
-> The PSKs will likely import at 100x scale. It's an artifact of unreal units being different. Select all (the mesh and the armature) and **S**cale down to 0.01, then you should be good to go. **[If you leave the models at 100x scale, you will run into strange interaction bugs during testing.](#)**
+> The PSKs will likely import at 100x scale. It's an artifact of unreal units being different. Select all (the mesh and the armature) and **S**cale down to 0.01, then you should be good to go. **<ins>If you leave the models at 100x scale, you will run into strange interaction bugs during testing.</ins>**
 
 ---
 
@@ -134,7 +134,7 @@ It can be a somewhat long process, but it is unfortunately required, as there is
 Once your environment is set up, you can make a new, simple blueprint mod, and get started on the couple steps you need. Everything below will be done inside the `Content` folder of a new blueprint mod you've made via the Alpakit wizard. Remember, refer to the Modding docs or the discord for how all that stuff works!
 
 > [!IMPORTANT]
-> **[Always remember to save your assets!!!](#)** Unreal does not automatically save changes to assets like imported models, textures, materials, or blueprints or anything else.
+> **<ins>Always remember to save your assets!!!</ins>** Unreal does not automatically save changes to assets like imported models, textures, materials, or blueprints or anything else.
 > You *must* do this yourself, and if you forget, and then pack your mod, it *will* behave strangely and you *will* be confused. And I _will_ be sad.
 > 
 > Go to `File -> Save All` for easy saving.
@@ -182,11 +182,11 @@ Unreal will create a Skeletal Mesh and a PhysicsAsset for your avatar.
 
 Now that both the 1p and 3p versions of the model have imported correctly and the skeletons are assigned, we can get onto importing your textures and assigning materials.
 
-**[For Textures:](#)**
+**<ins>For Textures:</ins>**
 1. I'd recommend making a subfolder for them, then just drag and drop every texture in, and unreal will automatically import them.
 1. Make sure your textures are being interpreted correctly by unreal. Data textures like normal maps and MSR textures should have "sRGB" off, while base color and emission textures should have it on. Hover over the asset to see how it's set, and double click to edit if it's not right.
 
-**[For Materials:](#)**
+**<ins>For Materials:</ins>**
 You have two options: create Material Instances, or create new raw Materials.
 
 It's *highly* recommended that, if possible, you make use of an existing Material or Material Instance. This vastly improves performance, and makes your material configurable at runtime as well as, if you use the right instances, modifiable by other systems in the game.
