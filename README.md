@@ -108,11 +108,21 @@ Here are some tips mostly specific to satisfactory:
 - For the 3p Armature: the head *must* be all weighted to a single head bone. Like, you *can* keep other bones on it, but... don't expect the physics engine to like you. It might be possible to find a way to make said bones work well, but I haven't figured it out. Let me know on the discord if you make it work!
 - Don't get too fussy with materials; chances are you'll have to recreate them in Unreal from the texture files anyway. Or, even better, you can use one of the material templates provided in the core mod, if your textures work with one of them.
 
+*Incorperating base-game assets to support customization:*
+
+> [!WARNING]
+> When considering using base-game assets in custom models, be wary of distributing copyrighted content of Coffee Stain Studios. If you do incorperate any significant amount of base game material into the model for aesthetic or other purposes, you probably shouldn't upload it to SMM.
+
+If you re-use the clothing meshes from the original pioneer, and thus the same materials, you will automatically gain support for the vanilla customizer to recolor said clothing on your mesh as well, which can be a great point of immersion.
+
+Alternatively, if you want to make something releasable, you can try making your own clothing, or other materials, that are compatible with the vanilla pioneer materials, and thus also recolorable. I can't really help with that, but the potential is definitely there, and there's no reason the core mod wouldn't allow you to do it. I hope to figure out how to properly support recoloring, particularly for more arbitrary materials, in future updates.
+
 *Using the Base Game Helmet(s):*
 
 The base game pioneer mesh renders the helmet as a separate static mesh to the main character body. Thus, you have the option of keeping that and working it into your avatar, or hiding it and just doing your own thing.
 - If you do design your avatar with the helmet in mind, it'll mean the vanilla customizer will be able to be used to choose between the various helmets in game and they'll actually show up. In that case, you shouldn't have the head on the 3p model, where usually you would.
 - If using the base game helmet unchanged doesn't work with your model's head/neck shape, but you still want to add helmet customization, consider just making separate 3p avatars for each helmet type. In a future update, once I figure out how to more deeply integrate into the vanilla player customizer, I intend to allow for such avatar sets to override the helmet selection, among other things.
+
 
 ### Final Edits and Export
 
@@ -249,7 +259,7 @@ Once you have the avatar definitions, it's a fairly short but nerdy jaunt into m
 
 As a last step... I'd suggest listing CharacterReplacer as a dependency of your mod. After all, it won't work without it! It'll make sure that even if you don't end up publishing your mod, SML / Unreal can help enforce that the core mod is present and has the right version. You can find instructions here: https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/ReleaseMod.html#_special_fields
 
-
+--
 
 With that, you should be good to go! If you compile/install your mod along with CharacterReplacer (Check modding docs for alpakit buttons), it should automatically detect and load your registered avatars from your new mod and any others you have; and from there, it will take care of letting you select one from the mod config page and play with others with their own selected avatars!
 
