@@ -5,7 +5,7 @@
 This mod is a library mod to facilitate custom player avatars, alone or with your friends, in Satisfactory.
 
 > [!IMPORTANT]
-> **[No custom avatars are included when you install this mod alone.](#)** It is designed to handle as much of the work needed as possible to integrate arbitrary custom models into the game, so that modellers without coding experience can integrate their avatars without having to worry about all the fancy details.
+> <ins>**No custom avatars are included when you install this mod alone.**</ins> It is designed to handle as much of the work needed as possible to integrate arbitrary custom models into the game, so that modellers without coding experience can integrate their avatars without having to worry about all the fancy details.
 
 ### Installing
 
@@ -39,9 +39,9 @@ Once you've decided on a model, here's a rough outline of what needs to happen i
 
 [Step 3.](#3-getting-ready-for-unreal) (Unreal):  Set up the Satisfactory Modding Evironment
 
-[Step 4.](#4-creating-your-avatar-mod) (Unreal):  Import the rigged models into Unreal
+[Step 4.](#4-creating-your-avatar-mod) (Unreal):  Create your mod and import the rigged models into Unreal
 
-[Step 5.](#5-registering-your-model-as-an-in-game-avatar) (Unreal):  Make a simple integration with Character Replacer
+[Step 5.](#5-registering-your-model-as-an-in-game-avatar) (Unreal):  Register your avatars with Character Replacer
 
 > [!IMPORTANT]
 > **[You will need to obtain *two separate rigs*](#)** to make an avatar: one for first person, one for third person. They're not *that* different, but both are required.
