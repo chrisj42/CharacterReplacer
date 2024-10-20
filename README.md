@@ -108,6 +108,12 @@ Here are some tips mostly specific to satisfactory:
 - For the 3p Armature: the head *must* be all weighted to a single head bone. Like, you *can* keep other bones on it, but... don't expect the physics engine to like you. It might be possible to find a way to make said bones work well, but I haven't figured it out. Let me know on the discord if you make it work!
 - Don't get too fussy with materials; chances are you'll have to recreate them in Unreal from the texture files anyway. Or, even better, you can use one of the material templates provided in the core mod, if your textures work with one of them.
 
+*Using the Base Game Helmet(s):*
+
+The base game pioneer mesh renders the helmet as a separate static mesh to the main character body. Thus, you have the option of keeping that and working it into your avatar, or hiding it and just doing your own thing.
+- If you do design your avatar with the helmet in mind, it'll mean the vanilla customizer will be able to be used to choose between the various helmets in game and they'll actually show up. In that case, you shouldn't have the head on the 3p model, where usually you would.
+- If using the base game helmet unchanged doesn't work with your model's head/neck shape, but you still want to add helmet customization, consider just making separate 3p avatars for each helmet type. In a future update, once I figure out how to more deeply integrate into the vanilla player customizer, I intend to allow for such avatar sets to override the helmet selection, among other things.
+
 ### Final Edits and Export
 
 Make sure you do the following just before exporting each of the rigs of your new avatar:
@@ -189,41 +195,49 @@ Now that both the 1p and 3p versions of the model have imported correctly and th
 **<ins>For Materials:</ins>**
 You have two options: create Material Instances, or create new raw Materials.
 
-It's *highly* recommended that, if possible, you make use of an existing Material or Material Instance. This vastly improves performance, and makes your material configurable at runtime as well as, if you use the right instances, modifiable by other systems in the game.
+It's *highly* recommended that, if possible, you make a child material of an existing Material or Material Instance. This vastly improves performance, and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game.
 
-You can find material instances I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, use that. You do not need to specify values for every parameter.
+You can find instance-able materials I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, make a Material Instance as a child of that. You do not need to specify values for every parameter.
 
 ***To make a Material Instance:***
 1. Right click -> Add/Import Content (Or the Add button in the Content Browser) -> Create Advanced Asset -> Material -> Material Instance
 1. Name it how you like, preferably matching the material slot that you're going to use it for.
 1. Open it up, scroll down a bit, and select a parent material to inherit from.
-1. A list of parameters will appear. Check the box for your relevant textures and assign them.
+1. A list of parameters will appear above. Check the boxes for your relevant textures and assign them, then save the asset.
 
 ***To make a new Material:***
 1. Right click -> Add/Import Content (Or the Add button in the Content Browser) -> Material
 1. When you open the asset, you will be greeted with a node-based shader graph. Unreal has a different naming scheme than blender, so it can be annoying, but feel free to look at existing materials / the provided material templates for an idea of how to plug stuff in.
+1. Remember to "apply"/save/compile the Material when you're done.
 
 
-Finally... once all your materials are set up, edit your skeletal mesh assets and assign the materials / material instances you created to their respective material slots.
-
-### Extra Features
-
-Footprint Overrides:
-- You may notice a complicated looking array field in the Avatar Defintion called "Footprint Overrides". This can be used to change the footprint decals that the game applies to the ground in various areas of the map, like sand, swampland, etc.
-- Honestly I just added this because I thought it was funny; if you want to try and use it, the base game normal maps to reference are in `FactoryGame/Content/FactoryGame/VFX/Textures/Char/Player/` in the utoc file in FModel.
-- The game only seems to use Sand, Mud, and Soil at the moment, which are in the array at 1 (Surface_Sand), 5 (Surface_Moist), and 10 (Surface_Soil). Go wild, but note that they may be a little finnicky to get to display properly.
+Finally... once all your materials are set up, open your skeletal mesh assets and assign the materials / material instances you created to their respective material slots. For most avatars, they will likely be the same ones, minus any eye or other head-only material slots on the 1p version.
 
 > [!NOTE]
 > Wondering about bouncy physics on extra bones? I've not figured that out yet, but I'm sure it's possible. Feel free to give it a go and report back, and I'll update this if I figure it out later as well.
 
 ## 5. Registering your Model as an in-game Avatar
 
-At this point, your avatars should be fully textured and essentially all set to go; all that's left is the CharacterReplacer-specific stuff that takes your new Unreal Skeletal Meshes and plugs them into the game.
+At this point, your avatars should be fully rigged and textured and essentially all set to go; all that's left is the CharacterReplacer-specific stuff that takes your new Unreal Skeletal Meshes and plugs them into the game.
 
-1. For each Avatar you want to add... (essentially, for every 1p/3p pair of models):
-   1. Create a new `Misc/Data Asset` in the folder with your avatar assets, and parent it to the `AvatarDefinition` type. Name it after your model (doesn't particularly matter, but I use `Avatar<name>`).
-   1. Open the asset, and fill in the fields; drag in or select your skeletal mesh assets for first and third person, and select "keep helmet" only if you want the base pioneer's head to be rendered in addition to your mesh on the third person avatar. If you do happen to design your avatar with this in mind, it'll mean the vanilla customizer will be able to be used to choose between the various helmets in game and they'll actually show up.
-1. With all your Avatar Defintions created, create a new blueprint class in your mod's Content folder and select it to be a `GameInstanceModule`; name it `RootInstance_<yourmodID>`.
+### Create Avatar Definitions
+
+For each Avatar you want to add (essentially, for every 1p/3p pair of models), we need to package up the relevant information into a data file. It goes as follows:
+   1. Create a new `Misc/Data Asset` in the folder with your avatar assets, and parent it to the `AvatarDefinition` type.
+   1. Name the asset after your model (doesn't particularly matter, but I use `Avatar<name>`), and then open it.
+   1. Fill in the fields; start by dragging in or selecting your 1p and 3p skeletal mesh assets.
+   1. Select "keep helmet" only if you want the base pioneer's head to be rendered in addition to your mesh on the 3p avatar.
+
+*Footprint Overrides:*
+- You may notice a complicated looking array field in the Avatar Defintion called "Footprint Overrides". This can be used to change the footprint decals that the game applies to the ground in various areas of the map, like sand, swampland, etc.
+- Honestly I just added this because I thought it was funny; if you want to try and use it, the base game normal maps to reference are in `FactoryGame/Content/FactoryGame/VFX/Textures/Char/Player/` in the utoc file in FModel.
+- The game only seems to use Sand, Mud, and Soil at the moment, which are in the array at 1 (Surface_Sand), 5 (Surface_Moist), and 10 (Surface_Soil). Go wild, but note that they may be a little finnicky to get to display properly.
+
+### Register With CharacterReplacer
+
+Once you have the avatar definitions, it's a fairly short but nerdy jaunt into making a simple blueprint to connect everything up:
+
+1. Create a new blueprint class in your mod's Content folder and select it to be a `GameInstanceModule`; name it `RootInstance_<yourmodID>`.
 1. Open the new Root Instance Module, and mark it as a root module at the bottom of the details list.
 1. If you don't already see a blueprint grid (the "Event Graph") in the middle of the screen, open the "full blueprint editor" with the blue link near the top of the screen.
 1. Create a new variable on the left, and call it "AvatarDescriptors" or something like that; change the type to a map of `Name` -> `AvatarDefinition`.
