@@ -3,7 +3,7 @@
 - Integration with the Customization Locker
 
 - Avatars can now include an item descriptor to customize how they show up in the locker
-  - Existing models will have a default icon for now until they are updated.
+  - Existing models will not show up until they are updated.
 
 # 1.1.0
 
