@@ -135,6 +135,15 @@ Make sure you do the following just before exporting each of the rigs of your ne
 > [!NOTE]
 > Getting the model rigged and exported correctly here can be very touchy, particularly if you don't have much rigging experience. Again, unfortunately, I can't really help you much with this step, but hopefully I can get a proper guide for it here eventually.
 
+## 2.5. Make an icon for your avatar
+
+Later on, we're going to give your avatar an icon to display in the vanilla customizer. While you have all your art and modelling tools open, now might be a good time to make sure you have one!
+
+You don't have to do this now, and you can use whatever image you want, but I just thought I would mention this here.
+
+> [!NOTE]
+> Do try to make sure your image isn't larger than 256x256 in its final form.
+
 ---
 
 ## 3. Getting Ready for Unreal
@@ -237,11 +246,23 @@ For each Avatar you want to add (essentially, for every 1p/3p pair of models), w
    1. Name the asset after your model (doesn't particularly matter, but I use `Avatar<name>`), and then open it.
    1. Fill in the fields; start by dragging in or selecting your 1p and 3p skeletal mesh assets.
    1. Select "keep helmet" only if you want the base pioneer's head to be rendered in addition to your mesh on the 3p avatar.
+   1. (See below for footprint overrides)
+   1. Create a Locker Descriptor (see below) and assign it.
 
-*Footprint Overrides:*
+#### *Footprint Overrides:*
 - You may notice a complicated looking array field in the Avatar Defintion called "Footprint Overrides". This can be used to change the footprint decals that the game applies to the ground in various areas of the map, like sand, swampland, etc.
 - Honestly I just added this because I thought it was funny; if you want to try and use it, the base game normal maps to reference are in `FactoryGame/Content/FactoryGame/VFX/Textures/Char/Player/` in the utoc file in FModel.
 - The game only seems to use Sand, Mud, and Soil at the moment, which are in the array at 1 (Surface_Sand), 5 (Surface_Moist), and 10 (Surface_Soil). Go wild, but note that they may be a little finnicky to get to display properly.
+
+#### *Avatar Locker Descriptors*
+
+This defines how your avatar will show up when a player goes to the customization locker in the Hub.
+- Create a new `Blueprint Class` next to your AvatarDefinition, and parent it to the `AvatarDesc` class.
+- There is going to be a lot of stuff here; most of it is *useless*. Pay attention to:
+   - `Item -> M Display Name`: A friendly name/title for your avatar.
+   - `Item -> M Description`: A small blurb of text describing your avatar. Or, honestly, put whatever you want lol.
+   - `UI -> M Small Icon`: The icon that's displayed for your avatar. Use an image that represents them, a profile photo, a screenshot of them, whatever really. Try to keep it under 256x256.
+   - `UI -> Big Icon`: Use the same icon as the last.
 
 ### Register With CharacterReplacer
 
