@@ -241,13 +241,18 @@ At this point, your avatars should be fully rigged and textured and essentially 
 
 ### Create Avatar Definitions
 
-For each Avatar you want to add (essentially, for every 1p/3p pair of models), we need to package up the relevant information into a data file. It goes as follows:
+For each Avatar you want to add (essentially, for every 1p/3p pair of models), we need to package up the relevant information into a data file. Start with filling in these fields, and reference the appropriate sections below for more info on the rest:
    1. Create a new `Misc/Data Asset` in the folder with your avatar assets, and parent it to the `AvatarDefinition` type.
    1. Name the asset after your model (doesn't particularly matter, but I use `Avatar<name>`), and then open it.
-   1. Fill in the fields; start by dragging in or selecting your 1p and 3p skeletal mesh assets.
+   1. Drag in or select your 1p and 3p skeletal mesh assets into the 1p mesh / 3p mesh fields respectively.
    1. Select "keep helmet" only if you want the base pioneer's head to be rendered in addition to your mesh on the 3p avatar.
-   1. (See below for footprint overrides)
    1. Create a Locker Descriptor (see below) and assign it.
+
+#### *Material Overrides:*
+
+If you have multiple possible textures for the same model, you may wish to create avatars for each of them. Using the Material Overrides arrays, you can specify the materials to use on a per-avatar basis instead of having to copy the mesh asset and assign the materials there.
+- Ensure the order you put the materials in exactly matches the order expected by the mesh.
+- You can specify only a couple, or leave gaps in the list, and only specified materials will be overridden.
 
 #### *Footprint Overrides:*
 - You may notice a complicated looking array field in the Avatar Defintion called "Footprint Overrides". This can be used to change the footprint decals that the game applies to the ground in various areas of the map, like sand, swampland, etc.

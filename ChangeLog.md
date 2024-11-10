@@ -1,3 +1,11 @@
+# 1.3.0
+
+- Avarars can now include material overrides for 1p/3p meshes
+  - This is QoL for model makers, allowing you to define different avatars using the same mesh(es) without having to copy the mesh completely just to change the assigned materials
+
+- Fixed bug with first person default pioneer when you change the FOV
+  - Custom avatars will still look weird if you change the FOV; technically possible to fix in theory if you know how to use panini maps
+
 # 1.2.0
 
 - Integration with the Customization Locker
