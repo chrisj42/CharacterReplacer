@@ -233,7 +233,7 @@ You can find instance-able materials I've provided in "Character Replacer Conten
 Finally... once all your materials are set up, open your skeletal mesh assets and assign the materials / material instances you created to their respective material slots. For most avatars, they will likely be the same ones, minus any eye or other head-only material slots on the 1p version.
 
 > [!NOTE]
-> Wondering about bouncy physics on extra bones? I've not figured that out yet, but I'm sure it's possible. Feel free to give it a go and report back, and I'll update this if I figure it out later as well.
+> Wondering about bouncy physics on extra bones? I'll try getting a guide up on it at some point, but I had success using trail controllers in a post-process animation blueprint. Others have gotten rigidbody simulation to work as well. It can definitely be finnicky though, and head-bone physics could still be jank. Good luck!
 
 ## 5. Registering your Model as an in-game Avatar
 
@@ -250,9 +250,9 @@ For each Avatar you want to add (essentially, for every 1p/3p pair of models), w
 
 #### *Material Overrides:*
 
-If you have multiple possible textures for the same model, you may wish to create avatars for each of them. Using the Material Overrides arrays, you can specify the materials to use on a per-avatar basis instead of having to copy the mesh asset and assign the materials there.
-- Ensure the order you put the materials in exactly matches the order expected by the mesh.
-- You can specify only a couple, or leave gaps in the list, and only specified materials will be overridden.
+If you have multiple possible textures for the same model, you may wish to create avatars for each of them. Using the Material 1p/3p Overrides arrays, you can specify the materials to use on a per-avatar basis instead of having to copy the mesh asset and assign the materials there.
+- Ensure the order you put the materials in exactly matches the order expected by the mesh you have in the associated 1p/3p field.
+- You can specify only a couple materials, or leave gaps in the list, and only specified materials will be overridden.
 
 #### *Footprint Overrides:*
 - You may notice a complicated looking array field in the Avatar Defintion called "Footprint Overrides". This can be used to change the footprint decals that the game applies to the ground in various areas of the map, like sand, swampland, etc.
