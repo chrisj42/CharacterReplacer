@@ -6,6 +6,8 @@
 - Fixed bug with first person default pioneer when you change the FOV
   - Custom avatars will still look weird if you change the FOV; technically possible to fix in theory if you know how to use panini maps
 
+- Fixed the helmet appearing momentarily in the locker on custom avis with it disabled
+
 # 1.2.0
 
 - Integration with the Customization Locker
