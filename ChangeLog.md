@@ -1,6 +1,10 @@
+# 1.4.0
+
+- Changed command names to be less likely to conflict with other mods; see reference at bottom of readme
+
 # 1.3.0
 
-- Avarars can now include material overrides for 1p/3p meshes
+- Avatars can now include material overrides for 1p/3p meshes
   - This is QoL for model makers, allowing you to define different avatars using the same mesh(es) without having to copy the mesh completely just to change the assigned materials
 
 - Fixed bug with first person default pioneer when you change the FOV
