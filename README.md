@@ -214,9 +214,10 @@ Now that both the 1p and 3p versions of the model have imported correctly and th
 **<ins>For Materials:</ins>**
 You have two options: create Material Instances, or create new raw Materials.
 
-It's *highly* recommended that, if possible, you make a child material of an existing Material or Material Instance. This vastly improves performance, and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game.
+It's recommended that, if possible, you make a child material of an existing Material or Material Instance. This vastly improves performance (although for player models that's really not relevant), and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game.
 
 You can find instance-able materials I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, make a Material Instance as a child of that. You do not need to specify values for every parameter.
+Otherwise, do feel free to makw your own materials, perhaps instancing those for each material slot in your model if they behave the same.
 
 ***To make a Material Instance:***
 1. Right click -> Add/Import Content (Or the Add button in the Content Browser) -> Create Advanced Asset -> Material -> Material Instance
@@ -239,6 +240,9 @@ Finally... once all your materials are set up, open your skeletal mesh assets an
 
 At this point, your avatars should be fully rigged and textured and essentially all set to go; all that's left is the CharacterReplacer-specific stuff that takes your new Unreal Skeletal Meshes and plugs them into the game.
 
+> [NOTE!]
+> After watching someone, I'm going to pre-emptively apologize for not having images for this part yet, I should really add those... if you can't figure out whether you're doing it right please feel free to ask!
+
 ### Create Avatar Definitions
 
 For each Avatar you want to add (essentially, for every 1p/3p pair of models), we need to package up the relevant information into a data file. Start with filling in these fields, and reference the appropriate sections below for more info on the rest:
@@ -255,7 +259,7 @@ If you have multiple possible textures for the same model, you may wish to creat
 - You can specify only a couple materials, or leave gaps in the list, and only specified materials will be overridden.
 
 #### *Footprint Overrides:*
-- You may notice a complicated looking array field in the Avatar Defintion called "Footprint Overrides". This can be used to change the footprint decals that the game applies to the ground in various areas of the map, like sand, swampland, etc.
+- You may notice a complicated looking array field in the Avatar Defintion called "Footprint Overrides". This can be used to change the footprint decals that the game applies to the ground in various areas of the map, like sand, swampland, etc. if your avatar isn't wearing boots.
 - Honestly I just added this because I thought it was funny; if you want to try and use it, the base game normal maps to reference are in `FactoryGame/Content/FactoryGame/VFX/Textures/Char/Player/` in the utoc file in FModel.
 - The game only seems to use Sand, Mud, and Soil at the moment, which are in the array at 1 (Surface_Sand), 5 (Surface_Moist), and 10 (Surface_Soil). Go wild, but note that they may be a little finnicky to get to display properly.
 
@@ -273,14 +277,14 @@ This defines how your avatar will show up when a player goes to the customizatio
 
 Once you have the avatar definitions, it's a fairly short but nerdy jaunt into making a simple blueprint to connect everything up:
 
-1. Create a new blueprint class in your mod's Content folder and select it to be a `GameInstanceModule`; name it `RootInstance_<yourmodID>`.
-1. Open the new Root Instance Module, and mark it as a root module at the bottom of the details list.
+1. Create a new blueprint class in your mod's Content folder and select it to be a `GameInstanceModule`; name it `RootInstance_YourmodID` (replace with your id/name; the file name is just for reference and standard, doesn't actually matter).
+1. Open the new Game Instance Module, and mark it as a root module at the bottom of the details list.
 1. If you don't already see a blueprint grid (the "Event Graph") in the middle of the screen, open the "full blueprint editor" with the blue link near the top of the screen.
 1. Create a new variable on the left, and call it "AvatarDescriptors" or something like that; change the type to a map of `Name` -> `AvatarDefinition`.
 1. Compile the blueprint with the button on the top-left.
 1. Add an entry for every `AvatarDefinition` you set up using the Details pane on the right, and choose an ID for the key for each avatar. This will be how you identify each avatar in game, so just give it a simple, no-spaces alphanumeric name. The full ID will be `:<YourModReference>:<AvatarName>`, but both will work in game; the full name is just to resolve name clashes.
 1. Click "Class Settings" (above the blueprint grid) and under the Details pane, "Interfaces" section, implement the `AvatarProvider` interface.
-1. This creates a `Get Avatars to Register` function on the left for `AvatarProvider`; double click it to create an implementation, drag your AvatarDescriptors map variable out onto the grid, and connect it to the output of the function.
+1. This creates a `Get Avatars to Register` function on the left for `AvatarProvider`; double click it to create an implementation, drag your AvatarDescriptors map variable out onto the grid, and connect it to the output of the function. (the little icons on the sides of each "node" can be connected by dragging from one to the other)
 1. Compile the blueprint one final time, and save all assets.
 
 As a last step... I'd suggest listing CharacterReplacer as a dependency of your mod. After all, it won't work without it! It'll make sure that even if you don't end up publishing your mod, SML / Unreal can help enforce that the core mod is present and has the right version. You can find instructions here: https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/ReleaseMod.html#_special_fields
@@ -291,15 +295,15 @@ With that, you should be good to go! If you compile/install your mod along with 
 
 ### Releasing your Mod
 
-You do not have to release your mod on SMM if you don't intend your avatar to be public. In this case, you would just zip the compiled mod in your game install Mods folder and send it to whatever friends you want to play with.
+You do not have to release your mod on SMM if you don't intend your avatar to be public (or if your model(s) use copyrighted assets for whatever reason that would cause issues). In this case, you would just zip the compiled mod in your game install Mods folder and send it to whatever friends you want to play with (or enjoy it yourself!).
 
-But if you *do* want to put it into the open for public use, by all means, please do! The previously linked docs page lists what you need: https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/ReleaseMod.html
+But if you *do* want to put it into the open for public use, by all means, please do! The previously linked docs page has what you need: https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/ReleaseMod.html
 
 I would recommend, when uploading, to tag it as #player and mention that it's a CharacterReplacer mod, for better searchability later.
 
 ## Troubleshooting
 
-***Did you remember to save your unreal assets before packaging?*** If not, go to File -> Save All. And try again. Trust me, I've forgotten *so many times.* It causes the *dumbest* bugs.
+***Did you remember to save your unreal assets before packaging?*** If not, go to File -> Save All. Then package it again. Trust me, I've forgotten *so many times.* It causes the *dumbest* bugs.
 
 ### Problems with the Textures not showing up
 
