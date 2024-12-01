@@ -240,7 +240,7 @@ Finally... once all your materials are set up, open your skeletal mesh assets an
 
 At this point, your avatars should be fully rigged and textured and essentially all set to go; all that's left is the CharacterReplacer-specific stuff that takes your new Unreal Skeletal Meshes and plugs them into the game.
 
-> [NOTE!]
+> [!NOTE]
 > After watching someone, I'm going to pre-emptively apologize for not having images for this part yet, I should really add those... if you can't figure out whether you're doing it right please feel free to ask!
 
 ### Create Avatar Definitions
