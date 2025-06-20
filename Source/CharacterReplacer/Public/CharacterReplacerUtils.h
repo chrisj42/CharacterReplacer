@@ -10,13 +10,13 @@
 #include "Animation/MorphTarget.h"
 #include "Misc/Guid.h"
 #include "MaterialTypes.h"
-#include "UCharacterReplacerUtils.generated.h"
+#include "CharacterReplacerUtils.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CHARACTERREPLACER_API UUCharacterReplacerUtils : public UBlueprintFunctionLibrary
+class CHARACTERREPLACER_API UCharacterReplacerUtils : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 	
