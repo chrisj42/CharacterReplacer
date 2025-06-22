@@ -8,6 +8,7 @@ void ACharacterReplacerDataSubsystem::BeginPlay()
 	if (!WITH_EDITOR)
 	{
 		SUBSCRIBE_METHOD_AFTER(AFGCharacterPlayer::UpdateEquipmentVisibility, [this](AFGCharacterPlayer* self) {
+			if (self == nullptr || this == nullptr) return;
 			this->OnEquipmentVisibilityUpdated(self);
 			});
 	}
