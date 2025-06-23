@@ -13,13 +13,10 @@ class CHARACTERREPLACER_API ACharacterReplacerDataSubsystem : public AModSubsyst
 {
 	GENERATED_BODY()
 
-protected:
-	virtual void BeginPlay() override;
+//protected:
+//	virtual void BeginPlay() override;
 
 public:
-
-	//ACharacterReplacerDataSubsystem();
-	//virtual ~ACharacterReplacerDataSubsystem();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "CRUtils")
 	void OnEquipmentVisibilityUpdated(AFGCharacterPlayer* player);
