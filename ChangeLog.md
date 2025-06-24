@@ -1,4 +1,4 @@
-# 1.4.0
+# 1.4.0-dev1
 
 - Changed command names to be less likely to conflict with other mods; see reference at bottom of readme
 - Added extensively improved locker customization
@@ -15,13 +15,14 @@ Details for Creators (This can all be found in the guide as well):
   - If a parameter on one material shares the same type and name as a parameter on another material, they will be modified in sync.
 - blendshapes are read from the model (no filtering options) and displayed at the bottom below the material stuff in game
 - blendshapes and displayed material scalars are all expected to have valid value ranges from 0-1
-  - if you have a material parameter which does not fit this range, use a mapping / scaling function in the material graph to fit it to the range. Only values within the range are selectable.
+  - if you have a material parameter which does not fit this range, use the LinearInterpolation node in the material graph to fit it to the range. Only values within the range are selectable.
   - this should already be standard practice for blendshapes
 - you can select a set of equipment pieces to forcefully hide from view per avatar (in case they don't work with your mesh for whatever reason)
 
 Outstanding Known Bugs:
 - using the /avi command to set your avatar, or doing it from the config menu, instead of the locker, will do funky things to your customization info; may not change or sync properly for a lil while. Changing avatars with the locker a few times will fix it, but you might not retain customization settings. Try to only use the locker for now; the other methods are more for debugging anyways.
 - I've found an occasional inconsistent bug where a client player may spawn in with the wrong avatar / a previously saved avatar on a server. Sometimes other occasional instances of the avatar not syncing correctly on initial join. Changing your avatar to something else and back should fix it, and it's very unlikely to happen unless you change avatars frequently.
+- force hiding equipment works intermittently
 
 These will be addressed in later 1.4.x patches; they shouldn't be too bothersome for the majority of users, and I wanted to get this out now for people to enjoy 1.1
 
