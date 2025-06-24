@@ -15,19 +15,18 @@ Here's a link to the SMR page though just for fun: https://ficsit.app/mod/Charac
 
 ### So what models are there?
 
-Unfortunately, as of writing this guide, there are none available... But hopefully that changes! The project is barely begun, and I've already had a number of people express interest.
+The only published, public mod to my knowledge as of writing is Protogen Pioneers: https://ficsit.app/mod/ProtoPioneer
 
-If there's a model you can think of that might be cool in the game, read on! Blender experience is probably recommended, but with enough determination, anything is possible. Or bother your modelling friend who has never touched a factory game in their life until they cave and add it for you! I'm not picky, but I'm happy to support anyone who wants to try. :)
-
-I'll also be trying to get a few example mods out as well!
+But, many people have used this so far to take their own private models and enjoy them in the game with friends!  
+So, if there's a model you can think of that might be cool in the game, read on! Blender experience is probably recommended, but with enough determination, anything is possible. Or bother your modelling friend who has never touched a factory game in their life until they cave and add it for you! I'm not picky, but I'm happy to support anyone who wants to try. :) My personal experience with the modelling side is limited, but I can try to at least point you in the right direction.
 
 ### I want to put a model in!
 
-Awesome! I've tried to make the process of adding support for new models as painless as possible; you _will_ be most likely fiddling around in blender with armatures a good bit, and you _do_ have to set up the modding env in unreal, but my code takes care of pretty much everything once you've managed to get unreal to recognize your mesh and textures.
+Awesome! I've tried to make the process of adding support for new models as painless as possible; you _will_ be most likely fiddling around in blender with armatures a good bit, and you _do_ have to set up the modding env in unreal, but my code takes care of pretty much everything once you've managed to get unreal to recognize your mesh and textures. In other words, required coding experience is minimal to none.
 
-Join the [modding discord](https://discord.ficsit.app/) if you need support! You can find my contact details on the [SMR page](https://ficsit.app/mod/CharacterReplacer), I would love to hear about your efforts and I'd be happy to clarify anything that this guide doesn't cover.
+Join the [modding discord](https://discord.ficsit.app/) if you need support! You can find my contact details on the [SMR page](https://ficsit.app/mod/CharacterReplacer), I would love to hear about your efforts and I'd be happy to clarify anything that this guide doesn't cover. I haven't made a dedicated server for the mod yet, but if you'd be interested in one, let me know as well!
 
-With that said... let's get into the fun part!
+With that out of the way... let's get into the fun part!
 
 # How to Make Compatible Avatar Mods
 
