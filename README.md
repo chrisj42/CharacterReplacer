@@ -122,6 +122,14 @@ The base game pioneer mesh renders the helmet as a separate static mesh to the m
 - If you do design your avatar with the helmet in mind, it'll mean the vanilla customizer will be able to be used to choose between the various helmets in game and they'll actually show up. In that case, you shouldn't have the head on the 3p model, where usually you would.
 - If using the base game helmet unchanged doesn't work with your model's head/neck shape, but you still want to add helmet customization, consider just making separate 3p avatars for each helmet type. In a future update, once I figure out how to more deeply integrate into the vanilla player customizer, I intend to allow for such avatar sets to override the helmet selection, among other things.
 
+### Shape Keys
+
+Depending on how you re-rig your models, you may or may not end up with shape keys on your mesh, as blender refers to them. As of version 1.4.0, any shape keys on your 3P mesh (if you import them into unreal) will show up in game in the locker customizer for users to customize! So... with that in mind, make sure the only shape keys on your 3P mesh before exporting are ones that you wish to expose to the player. Feel free to add new ones as well, of course!  
+Essentially:
+- the 3P mesh defines the shape keys available for players to customize on your avatar
+- they have an expected range of 0-1 (as is common for shape keys); you will not be able to put in values outside that range.
+- these shape keys will also be applied to your 1P avatar by name (or at least it will try), so add them there too if you want them to affect first-person.
+- Note that Unreal will refer to shape keys as "Morph Targets"; they are the same thing.
 
 ### Final Edits and Export
 
@@ -228,6 +236,17 @@ You can find instance-able materials I've provided in "Character Replacer Conten
 1. When you open the asset, you will be greeted with a node-based shader graph. Unreal has a different naming scheme than blender, so it can be annoying, but feel free to look at existing materials / the provided material templates for an idea of how to plug stuff in.
 1. Remember to "apply"/save/compile the Material when you're done.
 
+#### Material Parameters
+
+This is a good time to talk about material parameters. As of version 1.4.0, any "parameters" you define on your materials will be read by the mod and displayed to the player for editing. Material parameters are a basic Unreal feature, so feel free to read the UE docs on them. "Vector" parmaeters (colors) and "Scalar" parameters (floats/numbers) are the only parameter types which will be read by the mod. If you want to use parameters for internal purposes and not show them, or specify the order they are presented to the player in the UI, don't worry; we'll be able to handle that when registering the model. So feel free to define whatever parameters you like.
+
+Additional Notes:
+- All parameters on all materials assigned to either mesh are drawn from to display customization options.
+- If a parameter on one material shares the same type and name as a parameter on another material, they will be modified in sync.
+- scalar parameters will only be able to be set to values from 0-1. If you want a scalar outside that range, simply map your range to the desired range with a LinearInterpolation node (plug the parameter value into the alpha pin).
+- parameters from any vanilla materials are filtered out, *unless* you specify a specific parameter list. Even then, many may not work due to the way they are handled by the game. Best to make your own parameters.
+
+#### Finishing up
 
 Finally... once all your materials are set up, open your skeletal mesh assets and assign the materials / material instances you created to their respective material slots. For most avatars, they will likely be the same ones, minus any eye or other head-only material slots on the 1p version.
 
@@ -253,12 +272,23 @@ If you have multiple possible textures for the same model, you may wish to creat
 - Ensure the order you put the materials in exactly matches the order expected by the mesh you have in the associated 1p/3p field.
 - You can specify only a couple materials, or leave gaps in the list, and only specified materials will be overridden.
 
+#### *Material Parameter Whitelist:*
+
+If you don't have any fancy material parameters (and you don't have to!), you can leave this blank.  
+If you want to display all your material parameters, and you don't really care what order they go in, you can leave this blank.  
+Otherwise, use this list to order your material parameters in the UI for the player and select which ones to provide for them to customize.
+
+#### *Force Hidden Equipment:*
+
+This set simply allows you to hide certain pieces of equipment from the avatar. I'm not even sure myself as of writing this how to tailor equipment positioning for a model, or if it's even possible; but if it just looks bad, you can use this to hide it. It's purely cosmetic; just meant to help out weird player model body types.  
+This was a request from a modeller; I may add more types of equipment if there are any / if you poke me about it!
+
 #### *Footprint Overrides:*
 - You may notice a complicated looking array field in the Avatar Defintion called "Footprint Overrides". This can be used to change the footprint decals that the game applies to the ground in various areas of the map, like sand, swampland, etc.
 - Honestly I just added this because I thought it was funny; if you want to try and use it, the base game normal maps to reference are in `FactoryGame/Content/FactoryGame/VFX/Textures/Char/Player/` in the utoc file in FModel.
 - The game only seems to use Sand, Mud, and Soil at the moment, which are in the array at 1 (Surface_Sand), 5 (Surface_Moist), and 10 (Surface_Soil). Go wild, but note that they may be a little finnicky to get to display properly.
 
-#### *Avatar Locker Descriptors*
+#### *Avatar Locker Descriptors:*
 
 This defines how your avatar will show up when a player goes to the customization locker in the Hub.
 - Create a new `Blueprint Class` next to your AvatarDefinition, and parent it to the `AvatarDesc` class.
@@ -282,7 +312,14 @@ Once you have the avatar definitions, it's a fairly short but nerdy jaunt into m
 1. This creates a `Get Avatars to Register` function on the left for `AvatarProvider`; double click it to create an implementation, drag your AvatarDescriptors map variable out onto the grid, and connect it to the output of the function.
 1. Compile the blueprint one final time, and save all assets.
 
-As a last step... I'd suggest listing CharacterReplacer as a dependency of your mod. After all, it won't work without it! It'll make sure that even if you don't end up publishing your mod, SML / Unreal can help enforce that the core mod is present and has the right version. You can find instructions here: https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/ReleaseMod.html#_special_fields
+### Configure Mod Dependencies
+
+As a last step, list CharacterReplacer as a dependency of your mod. After all, it won't work without it! You can find instructions here under the Plugins row: https://docs.ficsit.app/satisfactory-modding/latest/Development/BeginnersGuide/ReleaseMod.html#_special_fields
+
+I would recommend using the semver format they encourage: prefix the current CharacterReplacer version with "^". I intend to maintain the rules of semver in my versioning, so using the right dependency version on my mod will mean yours will continue to work until I denote that I'm making incompatible changes.
+
+Also consider the "Required on Remote" setting. The way my mod works, it is entirely acceptable if you have an avatar mod locally that the server doesn't know about. You will just show up as the base pioneer or whatever people have put as their "missing" avatar.  
+Not saying you _should,_ because avatars are cool, but the option exists if you want to use it for whatever reason.
 
 --
 
@@ -299,6 +336,12 @@ I would recommend, when uploading, to tag it as #player and mention that it's a 
 ## Troubleshooting
 
 ***Did you remember to save your unreal assets before packaging?*** If not, go to File -> Save All. And try again. Trust me, I've forgotten *so many times.* It causes the *dumbest* bugs.
+
+### Known Bugs
+
+There are some minor bugs in 1.4.0 that will be corrected eventually in later patches (I wanted to get it out for people sooner). They're not much, but they're good to know about:
+- Do not use the config menu to change your avatar ID, or the /avi command; it will mess up some customization info and behave weird for a bit. Changing avatars a few times from the locker usually makes it go away. Avoid these for now; the locker is meant to be your one-stop shop for avatar editing anyways.
+- if you change your avatar frequently, you might find that you join a server with the wrong one on. Do an /avi-rs or just swap away and to it again in the hub locker and you should be all good.
 
 ### Problems with the Textures not showing up
 
@@ -336,6 +379,7 @@ If you every have issues with things, or want to get more information, there are
   - lists all locally registered avatar IDs in the game console, accessible with backtick/tilde key: `
 - /avatar /avi <id>
   - acts as if you had set your avatar id in the mod config.
+  - **Note: In 1.4.0, this will mess up some of your customization info on the avatar and it's a little buggy. Stick to using the hub locker for now.**
 - /refresh-avi /avi-r
   - Locally refreshes each player's avatar, according to the selected ID that's been replicated from the server. Sometimes fixes caching issues.
 - /resend-avi /avi-rs [all]
