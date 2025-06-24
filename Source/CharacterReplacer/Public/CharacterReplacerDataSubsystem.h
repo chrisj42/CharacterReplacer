@@ -8,7 +8,7 @@
 #include "CharacterReplacer.h"
 #include "CharacterReplacerDataSubsystem.generated.h"
 
-UCLASS(Blueprintable)
+UCLASS(Abstract, Blueprintable)
 class CHARACTERREPLACER_API ACharacterReplacerDataSubsystem : public AModSubsystem
 {
 	GENERATED_BODY()
