@@ -284,6 +284,10 @@ Otherwise, use this list to order your material parameters in the UI for the pla
 
 #### *Force Hidden Equipment:*
 
+> [!WARNING]
+> This feature is currently experimental. It mostly works but it's still a bit buggy sometimes, been annoying to properly implement.
+> I will attempt to make it more stable in future patches when I have more time.
+
 This set simply allows you to hide certain pieces of equipment from the avatar. I'm not even sure myself as of writing this how to tailor equipment positioning for a model, or if it's even possible; but if it just looks bad, you can use this to hide it. It's purely cosmetic; just meant to help out weird player model body types.  
 This was a request from a modeller; I may add more types of equipment if there are any / if you poke me about it!
 
