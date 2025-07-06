@@ -280,7 +280,7 @@ If you have multiple possible textures for the same model, you may wish to creat
 
 If you don't have any fancy material parameters (and you don't have to!), you can leave this blank.  
 If you want to display all your material parameters, and you don't really care what order they go in, you can leave this blank.  
-Otherwise, use this list to order your material parameters in the UI for the player and select which ones to provide for them to customize.
+Otherwise, use this list to order your material parameters in the UI for the player and select which ones to provide for them to customize. Simply put the names of the parameters you wish you display in the order you wish to display them.
 
 #### *Force Hidden Equipment:*
 
