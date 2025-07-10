@@ -1,3 +1,7 @@
+## 1.4.1
+
+- fixes helmet showing up / avatar showing improperly in decoupled-camera photo mode
+
 # 1.4.0
 
 - Changed command names to be less likely to conflict with other mods; see reference at bottom of readme
