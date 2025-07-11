@@ -1,6 +1,8 @@
 ## 1.4.1
 
 - fixes helmet showing up / avatar showing improperly in decoupled-camera photo mode
+- possibly fixed avi sometimes not loading properly on initial world join? (can still fix with an /avi-reset chat command)
+- changed long-form command names for consistency with short-form
 
 # 1.4.0
 

@@ -383,14 +383,14 @@ If your problem is with getting your model to show up in the list of registered 
 
 If you every have issues with things, or want to get more information, there are a few chat commands available, which you can also see with /help:
 
-- /list-avi /lsavi
+- /avi-list /avi-ls
   - lists all locally registered avatar IDs in the game console, accessible with backtick/tilde key: `
 - /avatar /avi <id>
   - acts as if you had set your avatar id in the mod config.
-  - **Note: In 1.4.0, this will mess up some of your customization info on the avatar and it's a little buggy. Stick to using the hub locker for now.**
-- /refresh-avi /avi-r
+  - **Note: As of 1.4.0, this will mess up some of your customization info on the avatar and it's a little buggy. Stick to using the hub locker for now.**
+- /avi-refresh /avi-r
   - Locally refreshes each player's avatar, according to the selected ID that's been replicated from the server. Sometimes fixes caching issues.
-- /resend-avi /avi-rs [all]
+- /avi-resend /avi-rs [all]
   - Reads your config and resends its ID to the server as if you'd changed avatars. With "all", forces all players to do the same. Helpful if something wasn't replicated properly.
-- /offline-avi /avi-off <id> [all]
-  - Sets the avatars of offline players nearby; the closest one by default, all loaded ones with `all` as the second argument. Might not work/save if you're a client, it's really just meant as a debugging command.
+- /avi-offline /avi-off <id> [all]
+  - Sets the avatars of offline players nearby; the closest one by default, all loaded ones with `all` as the second argument. Might not work/save if you're a client, it's really just meant as a debugging command or for the funzies.
