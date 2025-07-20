@@ -7,6 +7,7 @@
 - changed how avatar initialization works slightly, to account for more situations where players are loaded in during the game, including remote players
 	- you should hopefully notice less occasions where players mistakenly don't have their custom model on.
 - merged /avi-refresh and /avi-resend to speed up debugging; doing either one will now run both. (/avi-resend and /avi-rs are now deprecated, but still work)
+- fixed known bug with setting your avatar with /avi and mod config; it should no longer mess up your avatar info, and in fact, if you were always using fully-qualified avatar IDs (:modname:aviname), you probably haven't run into it to begin with. Please let me know if anything still messes up with them now!
 
 ## 1.4.1
 

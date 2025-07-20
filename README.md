@@ -347,9 +347,12 @@ I would recommend, when uploading, to tag it as #player and mention that it's a 
 
 ### Known Bugs
 
-There are some minor bugs in 1.4.0 that will be corrected eventually in later patches (I wanted to get it out for people sooner). They're not much, but they're good to know about:
-- Do not use the config menu to change your avatar ID, or the /avi command; it will mess up some customization info and behave weird for a bit. Changing avatars a few times from the locker usually makes it go away. Avoid these for now; the locker is meant to be your one-stop shop for avatar editing anyways.
-- if you change your avatar frequently, you might find that you join a server with the wrong one on. Do an /avi-rs or just swap away and to it again in the hub locker and you should be all good.
+There are currently no known bugs in non-experimental features of the mod in the most current version. Please tell me on Discord or in a Github issue if you run into problems with avatar loading or other such things!
+
+If you run into model-based issues, such as the ones described below, where it's clearly a custom avatar but it looks really weird or is behaving / rendering in a weird way, it's *probably* the avatar creator / modder who is to blame. But, if you're not sure, feel free to poke me and I can try and tell you with more certainty.
+
+**Currently Experimental Features:**
+- Force Hidden Equipment. Still buggy, but it works with at least some of the things I attempt to provide. Once I deem it as fully working, it will no longer be experimental.
 
 ### Problems with the Textures not showing up
 
@@ -386,11 +389,8 @@ If you every have issues with things, or want to get more information, there are
 - /avi-list /avi-ls
   - lists all locally registered avatar IDs in the game console, accessible with backtick/tilde key: `
 - /avatar /avi <id>
-  - acts as if you had set your avatar id in the mod config.
-  - **Note: As of 1.4.0, this will mess up some of your customization info on the avatar and it's a little buggy. Stick to using the hub locker for now.**
-- /avi-refresh /avi-r
-  - Locally refreshes each player's avatar, according to the selected ID that's been replicated from the server. Sometimes fixes caching issues.
-- /avi-resend /avi-rs [all]
-  - Reads your config and resends its ID to the server as if you'd changed avatars. With "all", forces all players to do the same. Helpful if something wasn't replicated properly.
+  - acts as if you had set your avatar id in the mod config. Note, it's not required to put the fully-qualified avatar ID here (i.e. including the :modname: prefix before the avi name), unless multiple avatar mods create naming conflicts. The system will qualify the ID for you.
+- /avi-refresh /avi-r [all]
+  - Reads your config and resends its ID to the server as if you'd changed avatars. Also locally refreshes all other avatars using their cached avatar info. With "all", forces all players to resend and refresh. Helpful if an avatar stops showing for whatever reason.
 - /avi-offline /avi-off <id> [all]
   - Sets the avatars of offline players nearby; the closest one by default, all loaded ones with `all` as the second argument. Might not work/save if you're a client, it's really just meant as a debugging command or for the funzies.
