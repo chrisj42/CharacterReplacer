@@ -1,3 +1,13 @@
+## 1.4.3
+
+
+
+## 1.4.2
+
+- changed how avatar initialization works slightly, to account for more situations where players are loaded in during the game, including remote players
+	- you should hopefully notice less occasions where players mistakenly don't have their custom model on.
+- merged /avi-refresh and /avi-resend to speed up debugging; doing either one will now run both. (/avi-resend and /avi-rs are now deprecated, but still work)
+
 ## 1.4.1
 
 - fixes helmet showing up / avatar showing improperly in decoupled-camera photo mode
