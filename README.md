@@ -206,9 +206,7 @@ Unreal will create a Skeletal Mesh and a PhysicsAsset for your avatar.
 > [!NOTE]
 > Did you get a popup asking you to confirm adding additional bones to the skeleton?
 > 
-> This is probably fine, it just means you have extra bones on your avatar. In fact, keeping bones where possible is beneficial, as they will be used in ragdolls and you won't look unnaturally stiff due to missing bones.
-> 
-> Unfortunately, I still haven't figured out how to actually make use of said extra bones *outside* of ragdoll animations, but I'll update this if I do. If you figure something out, poke me on the discord!
+> This is probably fine, it just means you have extra bones on your avatar. In fact, keeping bones where possible is beneficial, as they will be used in ragdolls and you won't look unnaturally stiff due to missing bones. Might be usable for other physics too, see the note further down.
 
 ### Setting up Materials and Textures
 
@@ -224,7 +222,7 @@ You have two options: create Material Instances, or create new raw Materials.
 It's recommended that, if possible, you make a child material of an existing Material or Material Instance. This vastly improves performance (although for player models that's really not relevant), and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game.
 
 You can find instance-able materials I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, make a Material Instance as a child of that. You do not need to specify values for every parameter.
-Otherwise, do feel free to makw your own materials, perhaps instancing those for each material slot in your model if they behave the same.
+Otherwise, do feel free to make your own materials, perhaps instancing those for each material slot in your model if they behave the same.
 
 ***To make a Material Instance:***
 1. Right click -> Add/Import Content (Or the Add button in the Content Browser) -> Create Advanced Asset -> Material -> Material Instance
@@ -252,7 +250,9 @@ Additional Notes:
 Finally... once all your materials are set up, open your skeletal mesh assets and assign the materials / material instances you created to their respective material slots. For most avatars, they will likely be the same ones, minus any eye or other head-only material slots on the 1p version.
 
 > [!NOTE]
-> Wondering about bouncy physics on extra bones? I'll try getting a guide up on it at some point, but I had success using trail controllers in a post-process animation blueprint. Others have gotten rigidbody simulation to work as well. It can definitely be finnicky though, and head-bone physics could still be jank. Good luck!
+> Wondering about physics simulation / bounciness on extra bones? I'll try getting a guide up on it if I can figure out how to do it better, but I had success using trail controllers in a post-process animation blueprint. Set your furthest bone as the main one and tell it how many bones up the chain to simulate.
+>
+> It can definitely be finnicky though, and head-bone physics in particular will likely still be jank and unusable. If you're an advanced user who really knows their stuff with unreal, such people have have gotten rigidbody simulation to work as well, and possibly ear physics? It's beyond me. Share your knowledge! And either way, good luck!
 
 ## 5. Registering your Model as an in-game Avatar
 
