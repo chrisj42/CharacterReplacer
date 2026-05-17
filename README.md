@@ -195,6 +195,7 @@ Unreal will create a Skeletal Mesh and a PhysicsAsset for your avatar.
 > [!WARNING]
 > Did you get a popup saying "Bones cannot be merged"? Try the following:
 > - Make sure you selected the right skeleton and imported the right mesh; using the 1p skeleton for the 3p avatar or vice versa will *not* work.
+> - Make sure you are selecting a Skeleton from the base game assets during the import process here! They should be under the path "/All/Game/FactoryGame/Character/Player/Mesh"
 > - Open the model back up in blender and make sure the main Armature is *named* "Armature". It'll create extra bones otherwise.
 > 
 > If you're still having issues:
