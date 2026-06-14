@@ -1,6 +1,11 @@
 ## 1.4.3
 
+### New Features
+- Support for Satisfactory version 1.2, SML 3.12
+	- You may need to recompile your avatar mods for them to work, however no other edits should be necessary.
 
+### Bug Fixes
+- Included "Material Templates" are now set to be usable with morph targets per https://github.com/chrisj42/CharacterReplacer/issues/3
 
 ## 1.4.2
 
