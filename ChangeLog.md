@@ -1,3 +1,8 @@
+## 1.4.4
+
+#### Bug fixes
+- photo mode was incorrectly updated last update; fixed to ensure the avatar is refreshed properly when photo mode is toggled and not just on mode changes.
+
 ## 1.4.3
 More potential features and fixes to come, this update is mainly to restore immediate compatibility with 1.2.
 
