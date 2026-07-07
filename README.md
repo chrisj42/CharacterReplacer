@@ -263,9 +263,9 @@ In the Editor for the Skeletal Mesh Asset for both your 1P and 3P avatars, take 
 This should enable the normal in game character shadow for your avatar. If you want a custom shadow, you're free to create/use your own Physics Asset, but you're on your own as I don't actually personally understand much about how unreal physics assets or shadow rendering works.
 
 > [!NOTE]
-> Wondering about physics simulation / bounciness on extra bones? I'll try getting a guide up on it if I can figure out how to do it better, but I had success using trail controllers in a post-process animation blueprint. Set your furthest bone as the main one and tell it how many bones up the chain to simulate.
+> Wondering about physics simulation / bounciness on extra bones? I'll try getting a guide up on it if I can figure out how to do it better, but I had success using trail controllers in a post-process animation blueprint. Set your furthest bone as the main one and tell it how many bones up the chain to simulate. You may actually want to keep the skeleton separate too instead of assigning the base game one? It's not as hard of a requirement as I initially thought.
 >
-> It can definitely be finnicky though, and head-bone physics in particular will likely still be jank and unusable. If you're an advanced user who really knows their stuff with unreal, such people have have gotten rigidbody simulation to work as well, and possibly ear physics? It's beyond me. Share your knowledge! And either way, good luck!
+> It can definitely be finnicky, and head-bone physics in particular will likely still be jank and unusable. If you're an advanced user who really knows their stuff with unreal, such people have have gotten rigidbody simulation to work as well, and possibly ear physics? It's beyond me. Share your knowledge! And either way, good luck!
 
 ## 5. Registering your Model as an in-game Avatar
 
