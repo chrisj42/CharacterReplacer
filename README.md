@@ -87,6 +87,8 @@ Then, open blender, and install the `io_scene_psk_psa` plugin. If it doesn't ins
 
 > [!WARNING]
 > The PSKs will likely import at 100x scale. It's an artifact of unreal units being different. Select all (the mesh and the armature) and **S**cale down to 0.01, then you should be good to go. **<ins>If you leave the models at 100x scale, you will run into strange interaction bugs during testing.</ins>**
+>
+> There also have been reports of applying the scale causing issues. For safety, I recommend **NOT** using the blender feature to "apply" this changed scale at any point, including export.
 
 ---
 
@@ -187,8 +189,9 @@ Side note, as you create your assets, if you are adding more than one avatar, I'
 Drag your fbx into the editor, and you'll be greeted with the import dialog. Ensure the following non-default options are changed:
    1. Select the Skeleton for your mesh; for the 1p model it's `1PCharacter_Skeleton`, for 3p it's `Character_Skeleton`. If these are grayed out and unreal does not have "Skeletal Mesh" checked by default, then you've exported your mesh incorrectly, and probably forgot to add an armature modifier / didn't export your armature.
    2. Open the "Advanced" dropdown in the "Mesh" section and enable "Use T0 As Ref Pose"
-   3. Look under the "Material" Section lower down; select "Do not create material" and optionally "Do not import textures". It probably won't import all the textures anyway, and it's easier to just import them manually once later.
-   4. Hit "Import All".
+   3. Ensure "Create Physics Asset" is checked near the bottom of the advanced section.
+   4. Look under the "Material" Section lower down; select "Do not create material" and optionally "Do not import textures". It probably won't import all the textures anyway, and it's easier to just import them manually once later.
+   5. Hit "Import All".
 
 Unreal will create a Skeletal Mesh and a PhysicsAsset for your avatar.
 
@@ -249,6 +252,15 @@ Additional Notes:
 #### Finishing up
 
 Finally... once all your materials are set up, open your skeletal mesh assets and assign the materials / material instances you created to their respective material slots. For most avatars, they will likely be the same ones, minus any eye or other head-only material slots on the 1p version.
+
+***Shadows:***  
+You can steal the shadow assets used by the base game if you want to make sure your avatar actually has a shadow in the game as well. To do so, you need to set up Placeholder assets in your *starter project* (not your mod folder), if they aren't there already; the docs describe placeholders here, but it's fairly simple: https://docs.ficsit.app/satisfactory-modding/latest/Development/ReuseGameFiles.html#_creating_the_placeholders  
+We want to create placeholders for:
+- /Game/FactoryGame/Character/Player/Mesh/1PCharacter_Shadow (Physics Asset) - turns out this is used for both first and third person shadows, for some reason. When it asks for a Skeletal Mesh, assign SK_Pioneer_1P_01 from the same folder.
+
+In the Editor for the Skeletal Mesh Asset for both your 1P and 3P avatars, take a look at the Asset Details pane, scroll down to the Lighting section, and for the Shadow Physics Asset, select the placeholder you just created.
+
+This should enable the normal in game character shadow for your avatar. If you want a custom shadow, you're free to create/use your own Physics Asset, but you're on your own as I don't actually personally understand much about how unreal physics assets or shadow rendering works.
 
 > [!NOTE]
 > Wondering about physics simulation / bounciness on extra bones? I'll try getting a guide up on it if I can figure out how to do it better, but I had success using trail controllers in a post-process animation blueprint. Set your furthest bone as the main one and tell it how many bones up the chain to simulate.
