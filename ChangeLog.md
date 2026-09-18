@@ -1,7 +1,7 @@
 ## 1.4.5
 
-### Beta Features
-- /avi-view <height offset> : chat command that allows you to modify the view height of your character. This will usually be horribly broken!! But if you've managed to get your character mesh to be a different size and want to mess around... here's a random tool you can mess with~. It doesn't persist across deaths or restarts.
+#### Bug fixes
+- Fixed a long standing bug where the helmet mesh would sometimes be left stuck in the HUB. Yay!
 
 ## 1.4.4
 
