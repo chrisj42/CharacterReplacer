@@ -112,10 +112,12 @@ Here are some tips mostly specific to satisfactory:
 > [!NOTE]
 > There has been recent success animating head physics / keeping head bones. I used to mention above that the Head bones **MUST** all be merged / there must be no head bones. I'm unsure anymore if this is still true. Perhaps inbuilt head bones like the jaw break things, but extra bones like ears are fine? Feel free to mess around, but if your head slides all over the place in game (you'll know what I mean), weighting it all to a single head bone solved it for me. I don't have the resources to test it currently, but I'll try to update this with something more definite when I do.
 
-*Incorperating base-game assets to support customization:*
+#### Incorperating base-game assets to support customization:
 
 > [!WARNING]
 > When considering using base-game assets in custom models, be wary of distributing copyrighted content of Coffee Stain Studios. If you do incorperate any significant amount of base game material into the model for aesthetic or other purposes, you probably shouldn't upload it to SMM.
+>
+> You can, however, safely use base game assets in unreal by referencing their placeholder assets. For example, you can set up material slots that will accept base game materials when it's compiled into the engine. Essentially, be wary of using things you extracted from FModel, but anything in the starter project we'll get to later on is fair game!
 
 If you re-use the clothing meshes from the original pioneer, and thus the same materials, you will automatically gain support for the vanilla customizer to recolor said clothing on your mesh as well, which can be a great point of immersion.
 
@@ -226,7 +228,7 @@ Now that both the 1p and 3p versions of the model have imported correctly and th
 **<ins>For Materials:</ins>**
 You have two options: create Material Instances, or create new raw Materials.
 
-It's recommended that, if possible, you make a child material of an existing Material or Material Instance. This vastly improves performance (although for player models that's really not relevant), and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game. However, again, for player models, it's not critical, just keep it in mind if you use a lot of materials / want to optimize. But if you're going make custom materials, try to use one main Material and instance it for your different texture sets, if they all behave similarly. You can use static switches and other parameters to manage behavior differences between instances.
+It's recommended that, if possible, you make a child material instance of an existing Material or Material Instance. This vastly improves performance (although for player models that's really not relevant), and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game. However, again, for player models, it's not critical, just keep it in mind if you use a lot of materials / want to optimize. But if you're going make custom materials, try to use one main Material and instance it for your different texture sets, if they all behave similarly. You can use static switches and other parameters to manage behavior differences between instances.
 
 You can find premade instance-able materials I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, make a Material Instance as a child of that. You do not need to specify values for every parameter.
 Otherwise, do feel free to make your own materials, perhaps instancing those for each material slot in your model if they behave the same.
@@ -246,16 +248,16 @@ Otherwise, do feel free to make your own materials, perhaps instancing those for
 
 You may notice, for **first person** materials specifically, that if you have a non-default FOV, stuff doesn't look... quite right. It's not aligned properly. This is because you need to specify in the material that "hey, this object is in first person, it's not part of the world, don't change it dependent on FOV." This process is called Panini Projection (I'm simplifying).
 
-When adding support for panini projection, I would recommend you use a material (or however many materials your mesh needs, just follow the below for each one) that have a switch parameter for whether to apply panini projection. Then, you can set it up with all your textures (which I'm assuming are the same for first and third person, which will usually be true unless you've done something very fancy), use the material for your 3p mesh, and then create a material instance off of that for first person, and enable the switch in the 1p material instance.
+When adding support for panini projection, I would recommend you use a material (or however many materials your mesh needs, just follow the below for each one) that has a switch parameter for whether to apply panini projection. Then, you can set it up with all your textures, use the material for your 3p mesh, and then create a material instance off of that for first person, and enable the switch in the 1p material instance.
 
 You may also create material instances off of material instances, such as if you wish to use the template materials. I have recently added panini support into these materials *(Thank you Ikeiwa for helping get that figured out!),* and I would recommend you look at them for reference on how to implement the panini projection switch if you're making your own. But for anyone who'd like text instructions too, here's how to do it for a custom material:
-1. Right click and create a new node of type "MakeMaterialAttributes
+1. Right click and create a new node of type "MakeMaterialAttributes"
 1. Retarget all of your material data to go here instead of the final material node
 1. Under Details -> Material, check "Use Material Attributes"
 1. Create a new node of type "MF_ApplyPaniniProjection"
-1. Create a new Switch Param node and name it something like "Enable First Person"
-1. Take the output of MakeMaterialAttributes, and connect it directly to False on the switch, and then connect it also to MF_ApplyPaniniProjection, which will then go to the True input.
-1. The switch output should then go to the final material output, which should now have only one input instead of all the stuff that's now on MakeMaterialAttributes
+1. Create a new Static Switch Param node and name it something like "Enable First Person"
+1. Take the output of MakeMaterialAttributes, and connect it directly to False on the switch, and then connect it also to MF_ApplyPaniniProjection, which will then go to the True input on the switch.
+1. The switch output should then go to the final material node, which should now have only one input instead of all the stuff that's now on MakeMaterialAttributes.
 	1. If you modified any of the constants on the old final material node, you'll want to make Constant nodes for each value and connect them to the corresponding entries on MakeMaterialAttributes, since you can't modify the values inline.
 
 #### Material Parameters
@@ -302,12 +304,13 @@ As you customize your physics settings, you should be able to preview them in un
 
 #### Trail Controllers
 
-Trail controllers basically animate a single bone chain, of a specified starting location and bone length, and allowing it to move using physics.
+Trail controllers basically animate a single bone chain, of a specified starting location and bone length, and allow it to move using physics.
 
-Inside your AnimationBlueprint, you'll want to create this chain of nodes in the main Animation Graph (will likely be open by default, else double click the AnimGraph on the left blueprint panel), from one to the next (If you have multiple bone chains you want to animate, feel free to insert further Trail Controllers in line with the first one):
+Inside your AnimationBlueprint, you'll want to create this chain of nodes in the main Animation Graph, from one to the next (will likely be open by default, else double click the AnimGraph on the left blueprint panel):
 - Input Pose
 - Local To Component
 - Trail Controller
+- *(optional: more trail controllers, one per bone chain you want to animate)*
 - Component to Local
 - Output Pose
 
