@@ -22,7 +22,7 @@ So, if there's a model you can think of that might be cool in the game, read on!
 
 ### I want to put a model in!
 
-Awesome! I've tried to make the process of adding support for new models as painless as possible; you _will_ be most likely fiddling around in blender with armatures a good bit, and you _do_ have to set up the modding env in unreal, but my code takes care of pretty much everything once you've managed to get unreal to recognize your mesh and textures. In other words, required coding experience is minimal to none.
+Awesome! I've tried to make the process of adding support for new models as painless as possible; you _will_ be most likely fiddling around in blender with armatures a good bit, and you _do_ have to set up the modding env in unreal, but my code takes care of pretty much everything once you've managed to get unreal to recognize your mesh and textures. In other words, required coding experience is minimal to none. Although some of the instructions may be a little tough to follow if you haven't touched unreal or a similar engine before, or node based editors.
 
 Join the [modding discord](https://discord.ficsit.app/) if you need support! You can find my contact details on the [SMR page](https://ficsit.app/mod/CharacterReplacer), I would love to hear about your efforts and I'd be happy to clarify anything that this guide doesn't cover. I haven't made a dedicated server for the mod yet, but if you'd be interested in one, let me know as well!
 
@@ -100,14 +100,17 @@ If you want to test the rest of the process out before getting into the nitty-gr
 
 ### Tips on Re-Rigging
 
-Unfortunately, the rigging process itself is a bit out of my wheelhouse. If you've done weightpainting or rigging before, you're in good shape. If you haven't, well... take a look around other modding communities that do mesh replacements, or look on youtube, or ask a friend. You essentially need to end up with the **exact** bone structure of the player rig you're trying to fit, while making sure the weightpainting still behaves decently at the end.
+Unfortunately, the rigging process itself is a bit out of my wheelhouse. If you've done weightpainting or rigging before, you're in good shape. If you haven't, well... take a look around other modding communities that do mesh replacements, or look on youtube, or ask a friend. You essentially need to end up with the **exact** bone structure of the player rig you're trying to fit, while making sure the weightpainting still behaves decently at the end. Extra bones are just fine, and may be helpful later too if you want fancy physics. But the stock bones *must* match.
 
 Here are some tips mostly specific to satisfactory:
 
 - Keep the head on the 3p model, and remove it on the 1p model. Unless you want to try and use the base-game helmet. Then remove it on both.
 - For the 1p Armature: note that the arms are separately parented from the rest of the body. In previous versions, the mesh had to be severed as well, but from the looks of it, that isn't the case anymore. Still, worth watching out for.
-- For the 3p Armature: the head *must* be all weighted to a single head bone. Like, you *can* keep other bones on it, but... don't expect the physics engine to like you. It might be possible to find a way to make said bones work well, but I haven't figured it out. Let me know on the discord if you make it work!
 - Don't get too fussy with materials; chances are you'll have to recreate them in Unreal from the texture files anyway. Or, even better, you can use one of the material templates provided in the core mod, if your textures work with one of them.
+- If you want to add physics to a certain bone chain later (such as a tail or keychain), according to some advice I recieved on discord, it may benefit you to add an additional bone at the end that's perfectly aligned with the previous. If you know what adding leaf bones on blender does, it's like that basically, but just for the bones you're interested in instead of all of them.
+
+> [!NOTE]
+> There has been recent success animating head physics / keeping head bones. I used to mention above that the Head bones **MUST** all be merged / there must be no head bones. I'm unsure anymore if this is still true. Perhaps inbuilt head bones like the jaw break things, but extra bones like ears are fine? Feel free to mess around, but if your head slides all over the place in game (you'll know what I mean), weighting it all to a single head bone solved it for me. I don't have the resources to test it currently, but I'll try to update this with something more definite when I do.
 
 *Incorperating base-game assets to support customization:*
 
@@ -223,9 +226,9 @@ Now that both the 1p and 3p versions of the model have imported correctly and th
 **<ins>For Materials:</ins>**
 You have two options: create Material Instances, or create new raw Materials.
 
-It's recommended that, if possible, you make a child material of an existing Material or Material Instance. This vastly improves performance (although for player models that's really not relevant), and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game.
+It's recommended that, if possible, you make a child material of an existing Material or Material Instance. This vastly improves performance (although for player models that's really not relevant), and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game. However, again, for player models, it's not critical, just keep it in mind if you use a lot of materials / want to optimize. But if you're going make custom materials, try to use one main Material and instance it for your different texture sets, if they all behave similarly. You can use static switches and other parameters to manage behavior differences between instances.
 
-You can find instance-able materials I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, make a Material Instance as a child of that. You do not need to specify values for every parameter.
+You can find premade instance-able materials I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, make a Material Instance as a child of that. You do not need to specify values for every parameter.
 Otherwise, do feel free to make your own materials, perhaps instancing those for each material slot in your model if they behave the same.
 
 ***To make a Material Instance:***
@@ -238,6 +241,22 @@ Otherwise, do feel free to make your own materials, perhaps instancing those for
 1. Right click -> Add/Import Content (Or the Add button in the Content Browser) -> Material
 1. When you open the asset, you will be greeted with a node-based shader graph. Unreal has a different naming scheme than blender, so it can be annoying, but feel free to look at existing materials / the provided material templates for an idea of how to plug stuff in.
 1. Remember to "apply"/save/compile the Material when you're done.
+
+#### Panini Projection
+
+You may notice, for **first person** materials specifically, that if you have a non-default FOV, stuff doesn't look... quite right. It's not aligned properly. This is because you need to specify in the material that "hey, this object is in first person, it's not part of the world, don't change it dependent on FOV." This process is called Panini Projection (I'm simplifying).
+
+When adding support for panini projection, I would recommend you use a material (or however many materials your mesh needs, just follow the below for each one) that have a switch parameter for whether to apply panini projection. Then, you can set it up with all your textures (which I'm assuming are the same for first and third person, which will usually be true unless you've done something very fancy), use the material for your 3p mesh, and then create a material instance off of that for first person, and enable the switch in the 1p material instance.
+
+You may also create material instances off of material instances, such as if you wish to use the template materials. I have recently added panini support into these materials *(Thank you Ikeiwa for helping get that figured out!),* and I would recommend you look at them for reference on how to implement the panini projection switch if you're making your own. But for anyone who'd like text instructions too, here's how to do it for a custom material:
+1. Right click and create a new node of type "MakeMaterialAttributes
+1. Retarget all of your material data to go here instead of the final material node
+1. Under Details -> Material, check "Use Material Attributes"
+1. Create a new node of type "MF_ApplyPaniniProjection"
+1. Create a new Switch Param node and name it something like "Enable First Person"
+1. Take the output of MakeMaterialAttributes, and connect it directly to False on the switch, and then connect it also to MF_ApplyPaniniProjection, which will then go to the True input.
+1. The switch output should then go to the final material output, which should now have only one input instead of all the stuff that's now on MakeMaterialAttributes
+	1. If you modified any of the constants on the old final material node, you'll want to make Constant nodes for each value and connect them to the corresponding entries on MakeMaterialAttributes, since you can't modify the values inline.
 
 #### Material Parameters
 
@@ -262,10 +281,41 @@ In the Editor for the Skeletal Mesh Asset for both your 1P and 3P avatars, take 
 
 This should enable the normal in game character shadow for your avatar. If you want a custom shadow, you're free to create/use your own Physics Asset, but you're on your own as I don't actually personally understand much about how unreal physics assets or shadow rendering works.
 
-> [!NOTE]
-> Wondering about physics simulation / bounciness on extra bones? I'll try getting a guide up on it if I can figure out how to do it better, but I had success using trail controllers in a post-process animation blueprint. Set your furthest bone as the main one and tell it how many bones up the chain to simulate. You may actually want to keep the skeleton separate too instead of assigning the base game one? It's not as hard of a requirement as I initially thought.
->
-> It can definitely be finnicky, and head-bone physics in particular will likely still be jank and unusable. If you're an advanced user who really knows their stuff with unreal, such people have have gotten rigidbody simulation to work as well, and possibly ear physics? It's beyond me. Share your knowledge! And either way, good luck!
+### Physics Simulation
+
+Alright, this section doesn't have a lot yet, but there are currently a few known ways to add physics to nonanimated bones on your avatar. The most reliable way so far is TrailControllers, which have limited configurability but are the easiest to set up. If you can get other methods working, like possibly Kawaii Physics or inbuilt methods, let me know! I'd be happy to add it here.
+
+Most of these are likely to require a PostProcessAnimationBlueprint asset on your avatar. You can create one of these from the content browser context menu:
+1. Create an AnimationBlueprint asset next to your skeletal mesh (typically the third person one, though you can probably make a second one for first person too)
+1. Open your skeletal mesh, and under Asset Details -> Animation -> Post Process Anim Blueprint, assign your new AnimationBlueprint asset.
+
+***Previewing your Physics:***
+
+As you customize your physics settings, you should be able to preview them in unreal using some of the game's animations. You can do this by:
+1. Opening your Skeletal Mesh
+1. Click on the Tab near "Asset Details" and "Details", the one labeled "Preview...Settings"
+1. Under Animation -> Preview Controller, select "Use Specific Animation"
+1. Under Animation -> Animation, select an animation from the game! It should pop up a bunch. Some of the running and sprinting animations might get some good movement, as a suggestion.
+
+> [!WARNING]
+> As mentioned, physics simulation generally only works on *nonanimated* bones. In other words, bones that are part of the base mesh, like your typical hips, head, fingers, arms, etc etc all the normal human bones, will generally not respond to physics. You'll want to have extra bones on your avatar, for things like keychains, tails, ears, etc, if you want to be able to animate them.
+
+#### Trail Controllers
+
+Trail controllers basically animate a single bone chain, of a specified starting location and bone length, and allowing it to move using physics.
+
+Inside your AnimationBlueprint, you'll want to create this chain of nodes in the main Animation Graph (will likely be open by default, else double click the AnimGraph on the left blueprint panel), from one to the next (If you have multiple bone chains you want to animate, feel free to insert further Trail Controllers in line with the first one):
+- Input Pose
+- Local To Component
+- Trail Controller
+- Component to Local
+- Output Pose
+
+In the TrailController details/settings, set your furthest bone as the main one (the Trail bone) and tell it how many bones **up** the chain to simulate (Chain Length). Note that you're effectively setting the *child* as the trail, and saying how far up the *parent* to go, not the other way around. There are plenty of other settings to mess with there too.
+
+#### Rigidbodies
+
+You can also use Rigidbody components to simulate physics. The Protogen Pioneer mod does this, for example. Sadly, I don't have the expertise to detail how that works... I didn't get it to work myself. But it's possible, just painful. I believe it has more configurability than trail controllers as well.
 
 ## 5. Registering your Model as an in-game Avatar
 

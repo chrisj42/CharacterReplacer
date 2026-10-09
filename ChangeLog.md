@@ -1,3 +1,9 @@
+## 1.4.7
+
+### New Features
+- Panini Projection has been added as a static switch on all template materials. Enabling this switch for your first-person meshes (only the first person ones!!) should fix issues with nondefault FOV settings breaking the first person avatar rendering. You can do this on your materials too! Much more info in a new section of the guide.
+- Guide has also been updated with further details on potential ways to do physics simulation.
+
 ## 1.4.6
 
 #### Bug Fixes
