@@ -228,10 +228,10 @@ Now that both the 1p and 3p versions of the model have imported correctly and th
 **<ins>For Materials:</ins>**
 You have two options: create Material Instances, or create new raw Materials.
 
-It's recommended that, if possible, you make a child material instance of an existing Material or Material Instance. This vastly improves performance (although for player models that's really not relevant), and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game. However, again, for player models, it's not critical, just keep it in mind if you use a lot of materials / want to optimize. But if you're going make custom materials, try to use one main Material and instance it for your different texture sets, if they all behave similarly. You can use static switches and other parameters to manage behavior differences between instances.
-
-You can find premade instance-able materials I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, make a Material Instance as a child of that. You do not need to specify values for every parameter.
+You can find premade materials I've provided in "Character Replacer Content / Material Templates" in the Content Browser. See if any of the available templates have texture parameters that fit the textures your model uses, and if so, make a Material Instance as a child of that. Or copy/reference them if you like. You do not need to specify values for every parameter.
 Otherwise, do feel free to make your own materials, perhaps instancing those for each material slot in your model if they behave the same.
+
+It's recommended that, if possible, you make a child material instance of an existing Material or Material Instance. This vastly improves performance (although for player models that's really not relevant), and makes your material configurable at runtime, as well as, if you use the right instances, modifiable by other systems in the game. However, again, for player models, it's not critical, just keep it in mind if you use a lot of materials / want to optimize. If you're going make custom materials, try to use one main Material and instance it for your different texture sets, if they all behave similarly. You can use static switches and other parameters to manage behavior differences between instances.
 
 ***To make a Material Instance:***
 1. Right click -> Add/Import Content (Or the Add button in the Content Browser) -> Create Advanced Asset -> Material -> Material Instance
